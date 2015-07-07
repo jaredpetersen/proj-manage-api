@@ -39,6 +39,10 @@ app.use(error);
 // =============================================================================
 // Server
 // =============================================================================
+// Set pretty printing of JSON
+// Shouldn't use this in production because it increases the file size,
+// leading to worse performance. May just want to do this for the public API.
+app.set('json spaces', 2);
 // Set the port
 var port = process.env.PORT || 8083;
 // Start the server
