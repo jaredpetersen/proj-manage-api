@@ -44,7 +44,7 @@ app.use(error);
 // leading to worse performance. May just want to do this for the public API.
 app.set('json spaces', 2);
 // Set the port
-var port = process.env.PORT || 8083;
+var port = process.env.PORT || 8086;
 // Start the server
 app.listen(port);
 console.log("Server running on port " + port);

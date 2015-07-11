@@ -4,7 +4,7 @@ var router = express.Router();
 
 router.route('/projects')
 
-    // Create a project (accessed at POST http://localhost:8080/projects)
+    // Create a project (accessed at POST http://localhost:8086/projects)
     .post(function(req, res, next) {
         // New project instance based on the project model
         var project = new Project();
@@ -13,61 +13,71 @@ router.route('/projects')
         // Save the project and check for errors
         project.save(function(err) {
             if (err) { next(err); }
-            res.json({ message: 'Project created!' });
+            else { res.json({ message: 'Project created!' }); }
         });
     })
 
-    // Get all of the projects (accessed at GET http://localhost:8080/projects)
+    // Get all of the projects (accessed at GET http://localhost:8086/projects)
     .get(function(req, res, next) {
         Project.find(function(err, projects) {
             if (err) { next(err); }
-            res.json(projects)
+            else { res.json(projects); }
         }).select('-__v');
     });
 
 router.route('/projects/:project_id')
 
-    // get the project associated with the id (accessed at GET http://localhost:8080/projects/:project_id)
+    // Get the project associated with the id (accessed at GET http://localhost:8086/projects/:project_id)
+    // Make sure to remove the API version from the output
     .get(function(req, res, next) {
         Project.findById(req.params.project_id, function(err, project) {
             if (err) { next(err); }
-            res.json(project);
+            else { res.json(project); }
         }).select('-__v');
     })
 
-    // update the project associated with the id (accessed at PUT http://localhost:8080/projects/:project_id)
+    // Update the project associated with the id (accessed at PUT http://localhost:8086/projects/:project_id)
     .put(function(req, res, next) {
         // Use the project model to find the desire project
         Project.findById(req.params.project_id, function(err, project) {
             if (err) { next(err); }
-            // Update the project's info
-            project.name = req.body.name;
-            // Save the project
-            project.save(function(err) {
-                if (err) { next(err); }
-                res.json({ message: "Project updated!" });
-            });
+            else {
+                // Update the project's info
+                project.name = req.body.name;
+                // Save the project
+                project.save(function(err) {
+                    if (err) { next(err); }
+                    else { res.json({ message: "Project updated!" }); }
+                });
+            }
         });
     })
 
-    // Delete the project with the assciated id (accessed at DELETE http://localhost:8080/projects/:project_id)
+    // Delete the project with the assciated id (accessed at DELETE http://localhost:8086/projects/:project_id)
     .delete(function(req, res, next) {
-        Project.remove({
-            _id: req.params.project_id
-        }, function(err, project) {
-            if (err) { next(err); }
-            res.json({ message: "Project deleted!" });
-        });
+        Project.remove(
+            { _id: req.params.project_id },
+            function(err, project) {
+                if (err) { next(err); }
+                else { res.json({ message: "Project deleted!" }); }
+            }
+        );
     });
 
-// TODO: Look into error processing further, especially when it comes to updating items
-// Catch 404s and error message
+// Catch validation errors, 404s, etc.
 router.use(function(err, req, res, next) {
-    if (res.statusCode == 500) {
-        res.status(500).json({"message": "Internal Server Error"});
+    console.log(err.name);
+    if (err.name == "ValidationError") {
+        // User's request didn't match up with the required data
+        res.status(400).json({"message": "Bad Request"});
+    }
+    else if (err.name == "CastError") {
+        // Couldn't find the project id
+        res.status(404).json({"message": "Not Found"});
     }
     else {
-        res.status(404).json({"message": "Not Found"});
+        // Something else went wrong
+        res.status(500).json({"message": "Internal Server Error"});
     }
 });
 
