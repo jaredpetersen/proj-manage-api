@@ -1,23 +1,36 @@
 var Project = require('../models/project');
+var User = require('../models/user');
 var express = require('express');
 var router = express.Router();
 
 router.route('/projects')
 
-    // Create a project (accessed at POST http://localhost:8086/projects)
+    // Create a project (accessed at POST http://localhost:8087/projects)
     .post(function(req, res, next) {
         // New project instance based on the project model
         var project = new Project();
         project.name = req.body.name;
-
-        // Save the project and check for errors
-        project.save(function(err) {
+        project.description = req.body.description;
+        var user = User.findById(req.body.user_id, function(err, user) {
             if (err) { next(err); }
-            else { res.json({ message: 'Project created!' }); }
+            else { return user; }
         });
+
+        // Make sure the user exists
+        if (user == null) { next(err); }
+        else {
+            // User exists
+            project.user_id = req.body.user_id;
+
+            // Save the project and check for errors
+            project.save(function(err) {
+                if (err) { next(err); }
+                else { res.json({ message: 'Project created!' }); }
+            });
+        }
     })
 
-    // Get all of the projects (accessed at GET http://localhost:8086/projects)
+    // Get all of the projects (accessed at GET http://localhost:8087/projects)
     .get(function(req, res, next) {
         Project.find(function(err, projects) {
             if (err) { next(err); }
@@ -27,7 +40,7 @@ router.route('/projects')
 
 router.route('/projects/:project_id')
 
-    // Get the project associated with the id (accessed at GET http://localhost:8086/projects/:project_id)
+    // Get the project associated with the id (accessed at GET http://localhost:8087/projects/:project_id)
     // Make sure to remove the API version from the output
     .get(function(req, res, next) {
         Project.findById(req.params.project_id, function(err, project) {
@@ -36,7 +49,7 @@ router.route('/projects/:project_id')
         }).select('-__v');
     })
 
-    // Update the project associated with the id (accessed at PUT http://localhost:8086/projects/:project_id)
+    // Update the project associated with the id (accessed at PUT http://localhost:8087/projects/:project_id)
     .put(function(req, res, next) {
         // Use the project model to find the desire project
         Project.findById(req.params.project_id, function(err, project) {
@@ -53,7 +66,7 @@ router.route('/projects/:project_id')
         });
     })
 
-    // Delete the project with the assciated id (accessed at DELETE http://localhost:8086/projects/:project_id)
+    // Delete the project with the assciated id (accessed at DELETE http://localhost:8087/projects/:project_id)
     .delete(function(req, res, next) {
         Project.remove(
             { _id: req.params.project_id },

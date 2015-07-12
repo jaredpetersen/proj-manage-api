@@ -8,13 +8,15 @@ var bodyParser = require('body-parser');
 // =============================================================================
 // Database Models
 // =============================================================================
-var Project    = require('./models/project');
+var Project = require('./models/project');
+var User    = require('./models/user');
 
 // =============================================================================
 // Routes
 // =============================================================================
 var middleware     = require('./routes/middleware');
 var projectRoute   = require('./routes/projects');
+var userRoute      = require('./routes/users');
 var error          = require('./routes/errors');
 
 // =============================================================================
@@ -34,6 +36,7 @@ app.use(bodyParser.json());
 // =============================================================================
 app.use(middleware);
 app.use(projectRoute);
+app.use(userRoute);
 app.use(error);
 
 // =============================================================================
@@ -44,7 +47,7 @@ app.use(error);
 // leading to worse performance. May just want to do this for the public API.
 app.set('json spaces', 2);
 // Set the port
-var port = process.env.PORT || 8086;
+var port = process.env.PORT || 8087;
 // Start the server
 app.listen(port);
 console.log("Server running on port " + port);
