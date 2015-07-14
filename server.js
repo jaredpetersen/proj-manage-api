@@ -4,26 +4,34 @@
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
+var mysql      = require('mysql');
 
 // =============================================================================
 // Database Models
 // =============================================================================
-var Project = require('./models/project');
-var User    = require('./models/user');
+//var Project = require('./models/project');
+//var User    = require('./models/user');
 
 // =============================================================================
 // Routes
 // =============================================================================
 var middleware     = require('./routes/middleware');
 var projectRoute   = require('./routes/projects');
-var userRoute      = require('./routes/users');
+//var userRoute      = require('./routes/users');
 var error          = require('./routes/errors');
 
 // =============================================================================
 // Database Connection
 // =============================================================================
-var mongoose   = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/proj-manage');
+var pool = mysql.createPool({
+    connectionLimit: 100,
+    host : '104.237.141.202',
+    port         : 3306,
+    user         : 'api_user',
+    password     : 'pwd',
+    database     : 'projmanage'
+});
+global.pool = pool;
 
 // =============================================================================
 // bodyParser -- Allows us to get data out of a POST
@@ -36,7 +44,7 @@ app.use(bodyParser.json());
 // =============================================================================
 app.use(middleware);
 app.use(projectRoute);
-app.use(userRoute);
+//app.use(userRoute);
 app.use(error);
 
 // =============================================================================
