@@ -7,17 +7,11 @@ var bodyParser = require('body-parser');
 var mysql      = require('mysql');
 
 // =============================================================================
-// Database Models
-// =============================================================================
-//var Project = require('./models/project');
-//var User    = require('./models/user');
-
-// =============================================================================
 // Routes
 // =============================================================================
 var middleware     = require('./routes/middleware');
 var projectRoute   = require('./routes/projects');
-//var userRoute      = require('./routes/users');
+var userRoute      = require('./routes/users');
 var error          = require('./routes/errors');
 
 // =============================================================================
@@ -44,7 +38,7 @@ app.use(bodyParser.json());
 // =============================================================================
 app.use(middleware);
 app.use(projectRoute);
-//app.use(userRoute);
+app.use(userRoute);
 app.use(error);
 
 // =============================================================================

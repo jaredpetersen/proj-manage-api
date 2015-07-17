@@ -2,12 +2,12 @@ var express = require('express');
 var router  = express.Router();
 var mysql   = require('mysql');
 
-router.route('/projects')
+router.route('/users')
 
-    // Create a project (accessed at POST http://localhost:8087/projects)
+    // Register a user
     .post(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            var query = 'Insert into projects (name, description, created, owner) values (' + pool.escape(req.body.name) + ', ' + pool.escape(req.body.description) + ', NOW(),' + pool.escape(req.body.userid) + ');';
+            var query = 'Insert into users (username, firstname, lastname, password, created) values (' + pool.escape(req.body.username) + ', ' + pool.escape(req.body.firstname) + ', ' + pool.escape(req.body.lastname) + ', ' + pool.escape(req.body.password) + ', NOW());';
             connection.query(query, function(err, rows, fields) {
                 if (err) next(err);
                 else {
@@ -18,10 +18,10 @@ router.route('/projects')
         });
     })
 
-    // Get all of the projects (accessed at GET http://localhost:8087/projects)
+    // Get all of the projects
     .get(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            connection.query('Select * from projects;', function(err, rows, fields) {
+            connection.query('Select * from users;', function(err, rows, fields) {
                 if (err) {
                     connection.release();
                     next(err);
@@ -34,13 +34,12 @@ router.route('/projects')
         });
     });
 
-router.route('/projects/:project_id')
+router.route('/users/:user_id')
 
-    // Get the project associated with the id (accessed at GET http://localhost:8087/projects/:project_id)
-    // Make sure to remove the API version from the output
+    // Get the user associated with the id
     .get(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            var query = 'Select * from projects where id = ' + pool.escape(req.params.project_id) + ';';
+            var query = 'Select * from users where id = ' + pool.escape(req.params.user_id) + ';';
             connection.query(query, function(err, rows, fields) {
                 if (err) {
                     connection.release();
@@ -60,22 +59,22 @@ router.route('/projects/:project_id')
         });
     })
 
-    // Update the project associated with the id (accessed at PUT http://localhost:8087/projects/:project_id)
+    // Update the project associated with the id
     .put(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            var query = 'Update projects set name = ' + pool.escape(req.body.name) + ', description = ' + pool.escape(req.body.description) + ', owner = ' + pool.escape(req.body.userid) + 'where id = ' + pool.escape(req.params.project_id) + ';';
+            var query = 'Update users set username = ' + pool.escape(req.body.username) + ', firstname = ' + pool.escape(req.body.firstname) + ', lastname = ' + pool.escape(req.body.lastname) + ', password = ' + pool.escape(req.body.password) + 'where id = ' + pool.escape(req.params.user_id) + ';';
             connection.query(query, function(err, rows, fields) {
                 if (err) {
                     connection.release();
                     next(err);
                 }
-                if (req.params.project_id == null)
+                if (req.params.user_id == null)
                 {
                     res.status(400).json({"message": "Bad Request"});
                     connection.release();
                 }
                 else if (rows["affectedRows"] > 0) {
-                    res.json({"message": "Project Updated!"});
+                    res.json({"message": "User Updated!"});
                     connection.release();
                 }
                 else {
@@ -86,17 +85,22 @@ router.route('/projects/:project_id')
         });
     })
 
-    // Delete the project with the assciated id (accessed at DELETE http://localhost:8087/projects/:project_id)
+    // Delete the user with the assciated id
     .delete(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            var query = 'Delete from projects where id = ' + pool.escape(req.params.project_id) + ';';
+            var query = 'Delete from users where id = ' + pool.escape(req.params.user_id) + ';';
             connection.query(query, function(err, rows, fields) {
                 if (err) {
                     connection.release();
                     next(err);
                 }
+                if (req.params.user_id == null)
+                {
+                    res.status(400).json({"message": "Bad Request"});
+                    connection.release();
+                }
                 else if (rows["affectedRows"] > 0) {
-                    res.json({"message": "Project Deleted!"});
+                    res.json({"message": "User Deleted!"});
                     connection.release();
                 }
                 else{
