@@ -1,14 +1,13 @@
 var express = require('express');
 var router  = express.Router();
 var mysql   = require('mysql');
-var moment  = require('moment');
 
 router.route('/projects')
 
     // Create a project (accessed at POST http://localhost:8087/projects)
     .post(function(req, res, next) {
         pool.getConnection(function(err, connection) {
-            var query = 'Insert into projects (name, description, created) values (' + pool.escape(req.body.name) + ', ' + pool.escape(req.body.description) + ', "' + moment().format('YYYY-MM-DD HH:MM:SS') + '");';
+            var query = 'Insert into projects (name, description, created) values (' + pool.escape(req.body.name) + ', ' + pool.escape(req.body.description) + ', NOW());';
             connection.query(query, function(err, rows, fields) {
                 if (err) next(err);
                 else {

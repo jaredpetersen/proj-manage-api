@@ -28,7 +28,7 @@ var pool = mysql.createPool({
     host : '104.237.141.202',
     port         : 3306,
     user         : 'api_user',
-    password     : 'pwd',
+    password     : 'BKHzZfzjWb8KCsFc4bPBd2HP',
     database     : 'projmanage'
 });
 global.pool = pool;
@@ -55,7 +55,7 @@ app.use(error);
 // leading to worse performance. May just want to do this for the public API.
 app.set('json spaces', 2);
 // Set the port
-var port = process.env.PORT || 8087;
+var port = process.env.PORT || 80;
 // Start the server
 app.listen(port);
 console.log("Server running on port " + port);
