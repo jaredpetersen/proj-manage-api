@@ -5,6 +5,7 @@ var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
 var mysql      = require('mysql');
+var config     = require('./config');
 
 // =============================================================================
 // Routes
@@ -18,12 +19,12 @@ var error          = require('./routes/errors');
 // Database Connection
 // =============================================================================
 var pool = mysql.createPool({
-    connectionLimit: 100,
-    host : '104.237.141.202',
-    port         : 3306,
-    user         : 'api_user',
-    password     : 'BKHzZfzjWb8KCsFc4bPBd2HP',
-    database     : 'projmanage'
+    connectionLimit: config.dbConnLimit,
+    host : config.dbHost,
+    port         : config.dbPort,
+    user         : config.dbUser,
+    password     : config.dbPass,
+    database     : config.dbName
 });
 global.pool = pool;
 
@@ -49,7 +50,7 @@ app.use(error);
 // leading to worse performance. May just want to do this for the public API.
 app.set('json spaces', 2);
 // Set the port
-var port = process.env.PORT || 80;
+var port = process.env.PORT || config.apiPort;
 // Start the server
 app.listen(port);
 console.log("Server running on port " + port);
