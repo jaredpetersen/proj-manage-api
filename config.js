@@ -5,5 +5,5 @@ module.exports = {
     'dbUser' : 'api_user',
     'dbPass' : 'BKHzZfzjWb8KCsFc4bPBd2HP',
     'dbName' : 'projmanage',
-    'apiPort' : 80
+    'apiPort' : 8080
 };

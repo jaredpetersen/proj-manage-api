@@ -5,6 +5,7 @@ var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
 var mysql      = require('mysql');
+var jwt        = require('jsonwebtoken');
 var config     = require('./config');
 
 // =============================================================================
@@ -13,6 +14,7 @@ var config     = require('./config');
 var middleware     = require('./routes/middleware');
 var projectRoute   = require('./routes/projects');
 var userRoute      = require('./routes/users');
+var authRoute      = require('./routes/authenticate');
 var error          = require('./routes/errors');
 
 // =============================================================================
@@ -20,11 +22,11 @@ var error          = require('./routes/errors');
 // =============================================================================
 var pool = mysql.createPool({
     connectionLimit: config.dbConnLimit,
-    host : config.dbHost,
-    port         : config.dbPort,
-    user         : config.dbUser,
-    password     : config.dbPass,
-    database     : config.dbName
+    host           : config.dbHost,
+    port           : config.dbPort,
+    user           : config.dbUser,
+    password       : config.dbPass,
+    database       : config.dbName
 });
 global.pool = pool;
 
@@ -40,6 +42,7 @@ app.use(bodyParser.json());
 app.use(middleware);
 app.use(projectRoute);
 app.use(userRoute);
+app.use(authRoute);
 app.use(error);
 
 // =============================================================================

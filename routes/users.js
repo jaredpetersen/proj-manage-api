@@ -11,7 +11,7 @@ router.route('/users')
             connection.query(query, function(err, rows, fields) {
                 if (err) next(err);
                 else {
-                    res.json({"message": "Project Created!"});
+                    res.json({"message": "User Registered!"});
                     connection.release();
                 }
             });
