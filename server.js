@@ -1,59 +1,30 @@
-// =============================================================================
-// Package Setup
-// =============================================================================
-var express    = require('express');
-var app        = express();
+'use strict';
+
+var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
-var mysql      = require('mysql');
-var jwt        = require('jsonwebtoken');
-var config     = require('./config');
+var mysql = require('mysql');
+var config = require('./config');
+require('./routes')(app);
 
-// =============================================================================
-// Routes
-// =============================================================================
-var middleware     = require('./routes/middleware');
-var projectRoute   = require('./routes/projects');
-var userRoute      = require('./routes/users');
-var authRoute      = require('./routes/authenticate');
-var error          = require('./routes/errors');
-
-// =============================================================================
-// Database Connection
-// =============================================================================
+// Database connection
 var pool = mysql.createPool({
     connectionLimit: config.dbConnLimit,
-    host           : config.dbHost,
-    port           : config.dbPort,
-    user           : config.dbUser,
-    password       : config.dbPass,
-    database       : config.dbName
+    host: config.dbHost,
+    port: config.dbPort,
+    user: config.dbUser,
+    password: config.dbPass,
+    database: config.dbName
 });
 global.pool = pool;
 
-// =============================================================================
-// bodyParser -- Allows us to get data out of a POST
-// =============================================================================
+// BodyParser allows us to get data out of URLs
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-// =============================================================================
-// Register API Routes
-// =============================================================================
-app.use(middleware);
-app.use(projectRoute);
-app.use(userRoute);
-app.use(authRoute);
-app.use(error);
-
-// =============================================================================
-// Server
-// =============================================================================
-// Set pretty printing of JSON
-// Shouldn't use this in production because it increases the file size,
-// leading to worse performance. May just want to do this for the public API.
+// PrettyPrint the JSON output
 app.set('json spaces', 2);
-// Set the port
-var port = process.env.PORT || config.apiPort;
+
 // Start the server
-app.listen(port);
-console.log("Server running on port " + port);
+app.listen(config.apiPort);
+console.log("Server running on port " + config.apiPort);
