@@ -5,7 +5,6 @@ var app = express();
 var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var config = require('./config');
-require('./routes')(app);
 
 // Database connection
 var pool = mysql.createPool({
@@ -21,6 +20,9 @@ global.pool = pool;
 // BodyParser allows us to get data out of URLs
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+// Add in the routes
+require('./routes')(app);
 
 // PrettyPrint the JSON output
 app.set('json spaces', 2);
