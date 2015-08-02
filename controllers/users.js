@@ -5,7 +5,7 @@ var mysql = require('mysql');
 // Get all users
 exports.findAll = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        connection.query('Select * from users;', function(err, rows, fields) {
+        connection.query('CALL all_users()', function(err, rows) {
             // Check for errors
             if (err) {
                 connection.release();
@@ -13,7 +13,7 @@ exports.findAll = function(req, res, next) {
             }
             // Return the user
             else {
-                res.json(rows);
+                res.json(rows[0]);
                 connection.release();
             }
         });

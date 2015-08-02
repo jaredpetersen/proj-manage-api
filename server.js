@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 require('./routes')(app);
 
 // PrettyPrint the JSON output
-app.set('json spaces', 2);
+// app.set('json spaces', 2);
 
 // Start the server
 app.listen(config.apiPort);
