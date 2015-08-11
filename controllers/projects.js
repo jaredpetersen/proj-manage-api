@@ -4,7 +4,8 @@ var mysql = require('mysql');
 
 // Get all projects
 exports.findAll = function(req, res, next) {
-    var query = 'CALL all_projects()';
+    var query = 'SELECT id, username, firstname, lastname, created FROM ' +
+                'projmanage.users;';
     pool.getConnection(function(err, connection) {
         connection.query(query, function(err, rows) {
             // Check for errors
@@ -23,7 +24,9 @@ exports.findAll = function(req, res, next) {
 
 // Get a specific project
 exports.findById = function(req, res, next) {
-    var query = 'CALL single_project(' + pool.escape(req.params.id) + ')';
+    var query = 'SELECT id, name, description, created, owner FROM ' +
+                'projmanage.projects WHERE id = ' +
+                pool.escape(req.params.id) + ';';
     pool.getConnection(function(err, connection) {
         connection.query(query, function(err, rows) {
             // Check for errors
@@ -50,9 +53,11 @@ exports.findById = function(req, res, next) {
 // Add a new project
 exports.add = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'CALL create_project(' + pool.escape(req.body.name) +
-                    ', ' + pool.escape(req.body.description) +
-                    ',' + pool.escape(req.body.owner) + ')';
+        var query = 'INSERT INTO projmanage.projects (name, description, ' +
+                    'created, owner) VALUES (' +
+                    pool.escape(req.body.name) + ', ' +
+                    pool.escape(req.body.description) + ', ' +
+                    'NOW(), ' + pool.escape(req.body.owner) + ');';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -71,10 +76,11 @@ exports.add = function(req, res, next) {
 // Update a specific project
 exports.update = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'CALL update_project(' + pool.escape(req.body.name) +
-                    ',' + pool.escape(req.body.description) +
-                    ',' + pool.escape(req.body.owner) +
-                    ',' + pool.escape(req.params.id) + ')';
+        var query = 'UPDATE projmanage.projects SET name = ' +
+                    pool.escape(req.body.name) + ', description = ' +
+                    pool.escape(req.body.description) + ', owner = ' +
+                    pool.escape(req.body.owner) + ' WHERE id = ' +
+                    pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -100,7 +106,8 @@ exports.update = function(req, res, next) {
 // Delete a specific project
 exports.delete = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'CALL delete_project(' + pool.escape(req.params.id) + ')';
+        var query = 'DELETE FROM projmanage.projects WHERE id = ' +
+                    pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {

@@ -5,6 +5,8 @@ var mysql = require('mysql');
 // Get all users
 exports.findAll = function(req, res, next) {
     pool.getConnection(function(err, connection) {
+        var query = 'SELECT id, username, firstname, lastname, created FROM ' +
+                    'projmanage.users;';
         connection.query('CALL all_users()', function(err, rows) {
             // Check for errors
             if (err) {
@@ -23,7 +25,8 @@ exports.findAll = function(req, res, next) {
 // Get a specific user
 exports.findById = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'Select * from users where id = ' + pool.escape(req.params.id) + ';';
+        var query = 'SELECT * FROM users WHERE id = ' +
+                    pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -49,7 +52,12 @@ exports.findById = function(req, res, next) {
 // Register a user
 exports.add = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'Insert into users (username, firstname, lastname, password, created) values (' + pool.escape(req.body.username) + ', ' + pool.escape(req.body.firstname) + ', ' + pool.escape(req.body.lastname) + ', ' + pool.escape(req.body.password) + ', NOW());';
+        var query = 'INSERT INTO users (username, firstname, lastname, ' +
+                    'password, created) VALUES (' +
+                    pool.escape(req.body.username) + ', ' +
+                    pool.escape(req.body.firstname) + ', ' +
+                    pool.escape(req.body.lastname) + ', ' +
+                    pool.escape(req.body.password) + ', NOW());';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -68,7 +76,12 @@ exports.add = function(req, res, next) {
 // Update a specific user
 exports.update = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'Update users set username = ' + pool.escape(req.body.username) + ', firstname = ' + pool.escape(req.body.firstname) + ', lastname = ' + pool.escape(req.body.lastname) + ', password = ' + pool.escape(req.body.password) + 'where id = ' + pool.escape(req.params.id) + ';';
+        var query = 'UPDATE users SET username = ' +
+                    pool.escape(req.body.username) + ', firstname = ' +
+                    pool.escape(req.body.firstname) + ', lastname = ' +
+                    pool.escape(req.body.lastname) + ', password = ' +
+                    pool.escape(req.body.password) + ' WHERE id = ' +
+                    pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -94,7 +107,8 @@ exports.update = function(req, res, next) {
 // Delete a specific project
 exports.delete = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'Delete from users where id = ' + pool.escape(req.params.id) + ';';
+        var query = 'DELETE FROM users WHERE id = ' +
+                    pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
