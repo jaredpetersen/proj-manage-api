@@ -1,11 +1,12 @@
 'use strict';
 
 var mysql = require('mysql');
+var bcrypt = require('bcryptjs');
 
 // Get all users
 exports.findAll = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'SELECT id, username, firstname, lastname, created FROM ' +
+        var query = 'SELECT id, email, firstname, lastname, created FROM ' +
                     'projmanage.users;';
         connection.query('CALL all_users()', function(err, rows) {
             // Check for errors
@@ -25,7 +26,7 @@ exports.findAll = function(req, res, next) {
 // Get a specific user
 exports.findById = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'SELECT id, username, firstname, lastname, created FROM ' +
+        var query = 'SELECT id, email, firstname, lastname, created FROM ' +
                     'projmanage.users WHERE id = ' +
                     pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
@@ -53,15 +54,19 @@ exports.findById = function(req, res, next) {
 // Register a user
 exports.add = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'INSERT INTO projmanage.users (username, firstname, ' +
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(req.body.password, salt);
+        var query = 'INSERT INTO projmanage.users (email, firstname, ' +
                     'lastname, password, created) VALUES (' +
-                    pool.escape(req.body.username) + ', ' +
+                    pool.escape(req.body.email) + ', ' +
                     pool.escape(req.body.firstname) + ', ' +
                     pool.escape(req.body.lastname) + ', ' +
-                    pool.escape(req.body.password) + ', NOW());';
+                    pool.escape(hash) + ', NOW());';
+        console.log(query);
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
+                console.log(err);
                 connection.release();
                 next(err);
             }
@@ -77,8 +82,8 @@ exports.add = function(req, res, next) {
 // Update a specific user
 exports.update = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'UPDATE projmanage.users SET username = ' +
-                    pool.escape(req.body.username) + ', firstname = ' +
+        var query = 'UPDATE projmanage.users SET email = ' +
+                    pool.escape(req.body.email) + ', firstname = ' +
                     pool.escape(req.body.firstname) + ', lastname = ' +
                     pool.escape(req.body.lastname) + ', password = ' +
                     pool.escape(req.body.password) + ' WHERE id = ' +
@@ -105,7 +110,7 @@ exports.update = function(req, res, next) {
     });
 };
 
-// Delete a specific project
+// Delete a specific user
 exports.delete = function(req, res, next) {
     pool.getConnection(function(err, connection) {
         var query = 'DELETE FROM projmanage.users WHERE id = ' +

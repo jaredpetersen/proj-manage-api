@@ -36,10 +36,11 @@ exports.findById = function(req, res, next) {
             }
             // Check if there are any users
             else if (rows[0].length > 0) {
+                // Return the project
                 res.json(rows[0]);
                 connection.release();
             }
-            // Return the project
+            // No project with that ID exists
             else {
                 connection.release();
                 var err = new Error();
