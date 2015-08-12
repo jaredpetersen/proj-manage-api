@@ -4,8 +4,8 @@ var mysql = require('mysql');
 
 // Get all projects
 exports.findAll = function(req, res, next) {
-    var query = 'SELECT id, username, firstname, lastname, created FROM ' +
-                'projmanage.users;';
+    var query = 'SELECT id, name, description, created, owner FROM ' +
+                'projmanage.projects;';
     pool.getConnection(function(err, connection) {
         connection.query(query, function(err, rows) {
             // Check for errors

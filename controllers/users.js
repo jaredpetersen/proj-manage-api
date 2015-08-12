@@ -25,7 +25,8 @@ exports.findAll = function(req, res, next) {
 // Get a specific user
 exports.findById = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'SELECT * FROM users WHERE id = ' +
+        var query = 'SELECT id, username, firstname, lastname, created FROM ' +
+                    'projmanage.users WHERE id = ' +
                     pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
@@ -52,8 +53,8 @@ exports.findById = function(req, res, next) {
 // Register a user
 exports.add = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'INSERT INTO users (username, firstname, lastname, ' +
-                    'password, created) VALUES (' +
+        var query = 'INSERT INTO projmanage.users (username, firstname, ' +
+                    'lastname, password, created) VALUES (' +
                     pool.escape(req.body.username) + ', ' +
                     pool.escape(req.body.firstname) + ', ' +
                     pool.escape(req.body.lastname) + ', ' +
@@ -76,7 +77,7 @@ exports.add = function(req, res, next) {
 // Update a specific user
 exports.update = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'UPDATE users SET username = ' +
+        var query = 'UPDATE projmanage.users SET username = ' +
                     pool.escape(req.body.username) + ', firstname = ' +
                     pool.escape(req.body.firstname) + ', lastname = ' +
                     pool.escape(req.body.lastname) + ', password = ' +
@@ -107,7 +108,7 @@ exports.update = function(req, res, next) {
 // Delete a specific project
 exports.delete = function(req, res, next) {
     pool.getConnection(function(err, connection) {
-        var query = 'DELETE FROM users WHERE id = ' +
+        var query = 'DELETE FROM projmanage.users WHERE id = ' +
                     pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
