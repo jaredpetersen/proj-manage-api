@@ -8,15 +8,16 @@ exports.findAll = function(req, res, next) {
     pool.getConnection(function(err, connection) {
         var query = 'SELECT id, email, firstname, lastname, created FROM ' +
                     'projmanage.users;';
-        connection.query('CALL all_users()', function(err, rows) {
+        connection.query(query, function(err, rows) {
             // Check for errors
             if (err) {
+                console.log(err);
                 connection.release();
                 next(err);
             }
             // Return the user
             else {
-                res.json(rows[0]);
+                res.json(rows);
                 connection.release();
             }
         });
@@ -37,7 +38,7 @@ exports.findById = function(req, res, next) {
             }
             // Check if there are any users
             else if (rows.length > 0) {
-                res.json(rows);
+                res.json(rows[0]);
                 connection.release();
             }
             // Could not find user
