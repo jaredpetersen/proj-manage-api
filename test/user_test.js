@@ -1,30 +1,71 @@
 var expect = require('chai').expect;
+var should = require('chai').should;
 var supertest = require('supertest');
 var config = require('../config');
 var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Users', function(){
-  it('GET Users (HTTP 200)', function(done){
-    api.get('/users')
-       .set('Accept', 'application/json')
-       .expect(200, done);
-  });
+    it('Lists all users', function(done){
+        api.get('/users')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function(err, res) {
+            // Overall
+            expect(res.body).to.be.a('Array');
+            if (res.body.length > 0) {
+                // User ID
+                expect(res.body[0]).to.have.property("id");
+                expect(res.body[0].id).to.not.equal(null);
+                expect(res.body[0].id).to.be.a('Number');
+                // Email
+                expect(res.body[0]).to.have.property("email");
+                expect(res.body[0].email).to.not.equal(null);
+                expect(res.body[0].email).to.be.a('String');
+                // First Name
+                expect(res.body[0]).to.have.property("firstname");
+                expect(res.body[0].firstname).to.not.equal(null);
+                expect(res.body[0].firstname).to.be.a('String');
+                // Last Name
+                expect(res.body[0]).to.have.property("lastname");
+                expect(res.body[0].lastname).to.not.equal(null);
+                expect(res.body[0].lastname).to.be.a('String');
+                // Created
+                expect(res.body[0]).to.have.property("created");
+                expect(res.body[0].created).to.not.equal(null);
+                expect(res.body[0].created).to.be.a('String');
+            }
+            done();
+        });
+    });
 
-  it('GET Single User (HTTP 200)', function(done){
-    api.get('/users/4')
-       .set('Accept', 'application/json')
-       .expect(200)
-       .end(function(err, res) {
-           expect(res.body).to.have.property("id");
-           expect(res.body.id).to.not.equal(null);
-           expect(res.body).to.have.property("email");
-           expect(res.body.email).to.not.equal(null);
-           expect(res.body).to.have.property("firstname");
-           expect(res.body.firstname).to.not.equal(null);
-           expect(res.body).to.have.property("lastname");
-           expect(res.body.lastname).to.not.equal(null);
-           expect(res.body).to.have.property("created");
-           done();
-       });
-  });
+    it('Gets a single user', function(done){
+        api.get('/users/4')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function(err, res) {
+            // Overall
+            expect(res.body).to.be.a('Object');
+            // User ID
+            expect(res.body).to.have.property("id");
+            expect(res.body.id).to.not.equal(null);
+            expect(res.body.id).to.be.a('Number');
+            // Email
+            expect(res.body).to.have.property("email");
+            expect(res.body.email).to.not.equal(null);
+            expect(res.body.email).to.be.a('String');
+            // First Name
+            expect(res.body).to.have.property("firstname");
+            expect(res.body.firstname).to.not.equal(null);
+            expect(res.body.firstname).to.be.a('String');
+            // Last Name
+            expect(res.body).to.have.property("lastname");
+            expect(res.body.lastname).to.not.equal(null);
+            expect(res.body.lastname).to.be.a('String');
+            // Created
+            expect(res.body).to.have.property("created");
+            expect(res.body.created).to.not.equal(null);
+            expect(res.body.created).to.be.a('String');
+            done();
+        });
+    });
 });
