@@ -12,6 +12,7 @@ describe('Users', function(){
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Array');
+            // When there are users
             if (res.body.length > 0) {
                 // User ID
                 expect(res.body[0]).to.have.property("id");
@@ -65,6 +66,22 @@ describe('Users', function(){
             expect(res.body).to.have.property("created");
             expect(res.body.created).to.not.equal(null);
             expect(res.body.created).to.be.a('String');
+            done();
+        });
+    });
+
+    it('Gets a single (nonexistent) user', function(done){
+        api.get('/users/0')
+        .set('Accept', 'application/json')
+        .expect(404)
+        .end(function(err, res) {
+            // Overall
+            expect(res.body).to.be.a('Object');
+            // Project ID
+            expect(res.body).to.have.property("message");
+            expect(res.body.message).to.not.equal(null);
+            expect(res.body.message).to.be.a('String');
+            expect(res.body.message).to.equal('Not Found');
             done();
         });
     });
