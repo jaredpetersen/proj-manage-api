@@ -29,4 +29,5 @@ module.exports = function (app) {
     // Error Handling
     var errors = require('./controllers/errors');
     app.use(errors.errorHandler);
+    app.use(errors.nullRoute); // Requested route doesn't exist
 };

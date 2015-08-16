@@ -1,6 +1,11 @@
 'use strict';
 
-// Handle all of the errors
+/*
+   Handle all of the errors
+   List of the error codes being checked
+   ER_BAD_NULL_ERROR -- User did not give all of the required parameters
+   ER_NO_REFERENCED_ROW_2 -- User gave a foreign key value that does not exist
+*/
 exports.errorHandler = function(err, req, res, next) {
     // Check for the various error statuses
     if (err.status == 400 ||
@@ -19,7 +24,7 @@ exports.errorHandler = function(err, req, res, next) {
     }
 };
 
-/* List of the error codes being checked
-   ER_BAD_NULL_ERROR -- User did not give all of the required parameters
-   ER_NO_REFERENCED_ROW_2 -- User gave a foreign key value that does not exist
-*/
+exports.nullRoute = function(req, res, next) {
+    // Requested route just doesn't exist
+    res.status(404).json({"message": "Not Found"});
+};
