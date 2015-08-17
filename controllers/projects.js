@@ -15,8 +15,7 @@ exports.findAll = function(req, res, next) {
             }
             // Return the projects
             else {
-                if (rows[0] == null) res.json([]);
-                else res.json(rows[0]);
+                res.json(rows);
                 connection.release();
             }
         });
