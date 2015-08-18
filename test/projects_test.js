@@ -67,4 +67,10 @@ describe('Projects', function(){
             done();
         });
     });
+
+    it('Creates a new project');
+
+    it('Updates a project');
+
+    it('Deletes a project');
 });

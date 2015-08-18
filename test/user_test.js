@@ -85,4 +85,10 @@ describe('Users', function(){
             done();
         });
     });
+
+    it('Creates a new user');
+
+    it('Updates a user');
+
+    it('Deletes a user');
 });
