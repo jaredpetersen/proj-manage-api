@@ -18,6 +18,22 @@ module.exports = function (app) {
     app.put('/projects/:id', projects.update);
     app.delete('/projects/:id', projects.delete);
 
+    // Tasks
+    var tasks = require('./controllers/tasks');
+    app.get('/tasks', tasks.findAll);
+    app.get('/tasks/:id', tasks.findById);
+    app.post('/tasks', tasks.add);
+    app.put('/tasks/:id', tasks.update);
+    app.delete('/tasks/:id', tasks.delete);
+
+    // Subasks
+    var subtasks = require('./controllers/subtasks');
+    app.get('/subtasks', subtasks.findAll);
+    app.get('/subtasks/:id', subtasks.findById);
+    app.post('/subtasks', subtasks.add);
+    app.put('/subtasks/:id', subtasks.update);
+    app.delete('/subtasks/:id', subtasks.delete);
+
     // Users
     var users = require('./controllers/users');
     app.get('/users', users.findAll);
