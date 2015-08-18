@@ -6,7 +6,7 @@ var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Subtasks', function(){
     it('Lists all subtasks', function(done){
-        api.get('/tasks')
+        api.get('/subtasks')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -22,7 +22,7 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/tasks/1')
+        api.get('/subtasks/2')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -57,7 +57,7 @@ describe('Subtasks', function(){
     });
 
     it('Gets a single (nonexistent) subtask', function(done){
-        api.get('/tasks/0')
+        api.get('/subtasks/0')
         .set('Accept', 'application/json')
         .expect(404)
         .end(function(err, res) {

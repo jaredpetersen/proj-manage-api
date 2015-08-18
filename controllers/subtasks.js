@@ -58,7 +58,7 @@ exports.add = function(req, res, next) {
                     'created, owner, parent_task) VALUES (' +
                     pool.escape(req.body.name) + ', ' +
                     pool.escape(req.body.description) + ', ' +
-                    'NOW(), ' + pool.escape(req.body.owner) +
+                    'NOW(), ' + pool.escape(req.body.owner) + ', ' +
                     pool.escape(req.body.parent_task) + ');';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
@@ -68,7 +68,7 @@ exports.add = function(req, res, next) {
             }
             // subtask was created
             else {
-                res.json({"message": "Subtask Created!"});
+                res.status(201).json({"message": "Subtask Created!"});
                 connection.release();
             }
         });

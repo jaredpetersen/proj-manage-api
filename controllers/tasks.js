@@ -4,8 +4,8 @@ var mysql = require('mysql');
 
 // Get all tasks
 exports.findAll = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner FROM ' +
-                'projmanage.tasks;';
+    var query = 'SELECT id, name, description, created, owner, ' +
+                'parent_project FROM projmanage.tasks;';
     pool.getConnection(function(err, connection) {
         connection.query(query, function(err, rows) {
             // Check for errors
@@ -24,8 +24,8 @@ exports.findAll = function(req, res, next) {
 
 // Get a specific task
 exports.findById = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner FROM ' +
-                'projmanage.tasks WHERE id = ' +
+    var query = 'SELECT id, name, description, created, owner, ' +
+                'parent_project FROM projmanage.tasks WHERE id = ' +
                 pool.escape(req.params.id) + ';';
     pool.getConnection(function(err, connection) {
         connection.query(query, function(err, rows) {
@@ -55,10 +55,11 @@ exports.findById = function(req, res, next) {
 exports.add = function(req, res, next) {
     pool.getConnection(function(err, connection) {
         var query = 'INSERT INTO projmanage.tasks (name, description, ' +
-                    'created, owner) VALUES (' +
+                    'created, owner, parent_project) VALUES (' +
                     pool.escape(req.body.name) + ', ' +
                     pool.escape(req.body.description) + ', ' +
-                    'NOW(), ' + pool.escape(req.body.owner) + ');';
+                    'NOW(), ' + pool.escape(req.body.owner) + ', ' +
+                    pool.escape(req.body.parent_project) + ');';
         connection.query(query, function(err, rows, fields) {
             // Check for errors
             if (err) {
@@ -67,7 +68,7 @@ exports.add = function(req, res, next) {
             }
             // task was created
             else {
-                res.json({"message": "Task Created!"});
+                res.status(201).json({"message": "Task Created!"});
                 connection.release();
             }
         });
@@ -80,7 +81,8 @@ exports.update = function(req, res, next) {
         var query = 'UPDATE projmanage.tasks SET name = ' +
                     pool.escape(req.body.name) + ', description = ' +
                     pool.escape(req.body.description) + ', owner = ' +
-                    pool.escape(req.body.owner) + ' WHERE id = ' +
+                    pool.escape(req.body.owner) + ', parent_project = ' +
+                    pool.escape(req.body.parent_project) + ' WHERE id = ' +
                     pool.escape(req.params.id) + ';';
         connection.query(query, function(err, rows, fields) {
             // Check for errors

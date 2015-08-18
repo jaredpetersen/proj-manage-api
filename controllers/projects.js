@@ -67,7 +67,7 @@ exports.add = function(req, res, next) {
             }
             // Project was created
             else {
-                res.json({"message": "Project Created!"});
+                res.status(201).json({"message": "Project Created!"});
                 connection.release();
             }
         });

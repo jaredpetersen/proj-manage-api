@@ -73,7 +73,7 @@ exports.add = function(req, res, next) {
             }
             // User was created
             else {
-                res.json({"message": "User Registered!"});
+                res.status(201).json({"message": "User Registered!"});
                 connection.release();
             }
         });

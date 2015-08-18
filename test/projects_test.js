@@ -22,7 +22,7 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/1')
+        api.get('/projects/4')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
