@@ -46,4 +46,9 @@ module.exports = function (app) {
     var errors = require('./controllers/errors');
     app.use(errors.errorHandler);
     app.use(errors.nullRoute); // Requested route doesn't exist
+
+    // To add authentication to a route, add a authenticate.verify to the
+    // parameters of the HTTP request. For example, if you want to lock down
+    // HTTP GET requests on /users, you would implement the following code:
+    //     app.get('/users', authenticate.verify, users.findAll);
 };

@@ -17,7 +17,7 @@ exports.errorHandler = function(err, req, res, next) {
         res.status(404).json({"message": "Not Found"});
     }
     else if (err.status == 401) {
-        res.status(401).json({"message": "User Authentication Failed!"});
+        res.status(401).json({"message": "Unauthorized"});
     }
     else {
         res.status(500).json({"message": "Internal Server Error"});

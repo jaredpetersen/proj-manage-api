@@ -18,7 +18,8 @@ exports.login = function(req, res, next) {
         }
         else {
             // Email addresses are unique, so no worries there
-            var query = 'Select password from users where email = ' +
+            var query = 'Select id, firstname, lastname, password from ' +
+                        'users where email = ' +
                         pool.escape(req.body.email) + ';';
             connection.query(query, function(err, rows, fields) {
                 if (err) {
@@ -31,10 +32,15 @@ exports.login = function(req, res, next) {
                     if (rows.length == 1 &&
                         bcrypt.compareSync(req.body.password,
                                            rows[0].password)) {
+                        console.log(rows);
                         // Create the JSON token
+                        // Look into adding a JTI in the future for additional
+                        // security
                         var token = jwt.sign(
                             {"email": req.body.email,
-                             "password": req.body.password},
+                             "firstname": rows[0].firstname,
+                             "lastname": rows[0].lastname,
+                             "id": rows[0].id},
                             config.tokenSecret,
                             {
                                 // Expire in 24 hours
@@ -59,4 +65,38 @@ exports.login = function(req, res, next) {
             });
         }
     });
+};
+
+// Check if the user is Authenticated
+// Not actually part of a normal route
+exports.verify = function(req, res, next) {
+    // Grab the JSONWebToken
+    var token = req.body.token ||
+                req.query.token ||
+                req.headers['x-access-token'];
+
+    // Decode the token if it exists
+    if (token) {
+        // Verify the token
+        jwt.verify(token, config.tokenSecret, function(err, decoded) {
+          if (err) {
+              // Something went wrong here (likely expired token) so just tell
+              // the user that they need to re-authenticate
+              var err = new Error();
+              err.status = 401;
+              next(err);
+          }
+          else {
+            // Everything is good, send along the decoded token so that other
+            // requests can pick up the data if necessary
+            req.decoded = decoded;
+            next();
+          }
+        });
+    }
+    else {
+        var err = new Error();
+        err.status = 401;
+        next(err);
+    }
 };

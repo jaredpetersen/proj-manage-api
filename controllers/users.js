@@ -5,6 +5,7 @@ var bcrypt = require('bcryptjs');
 
 // Get all users
 exports.findAll = function(req, res, next) {
+    console.log(req);
     pool.getConnection(function(err, connection) {
         var query = 'SELECT id, email, firstname, lastname, created FROM ' +
                     'projmanage.users;';
