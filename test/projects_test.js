@@ -22,16 +22,16 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/4')
+        api.get('/projects/55d8ca28980ceb6414a108e0')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Object');
             // Project ID
-            expect(res.body).to.have.property("id");
-            expect(res.body.id).to.not.equal(null);
-            expect(res.body.id).to.be.a('Number');
+            expect(res.body).to.have.property("_id");
+            expect(res.body._id).to.not.equal(null);
+            expect(res.body._id).to.be.a('String');
             // Name
             expect(res.body).to.have.property("name");
             expect(res.body.name).to.not.equal(null);
@@ -47,7 +47,11 @@ describe('Projects', function(){
             // Owner
             expect(res.body).to.have.property("owner");
             expect(res.body.owner).to.not.equal(null);
-            expect(res.body.owner).to.be.a('Number');
+            expect(res.body.owner).to.be.a('String');
+            // Members
+            expect(res.body).to.have.property("members");
+            expect(res.body.members).to.not.equal(null);
+            expect(res.body.members).to.be.an('Array');
             done();
         });
     });

@@ -1,140 +1,62 @@
 'use strict';
 
-var mysql = require('mysql');
+var User = require('../models/user.js');
 var bcrypt = require('bcryptjs');
 
 // Get all users
 exports.findAll = function(req, res, next) {
-    console.log(req);
-    pool.getConnection(function(err, connection) {
-        var query = 'SELECT id, email, firstname, lastname, created FROM ' +
-                    'projmanage.users;';
-        connection.query(query, function(err, rows) {
-            // Check for errors
-            if (err) {
-                console.log(err);
-                connection.release();
-                next(err);
-            }
-            // Return the user
-            else {
-                res.json(rows);
-                connection.release();
-            }
-        });
-    });
+    User.find(function(err, users) {
+        if (err) return next(err);
+        res.json(users);
+    }).select('-password -__v');
 };
 
 // Get a specific user
 exports.findById = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'SELECT id, email, firstname, lastname, created FROM ' +
-                    'projmanage.users WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if there are any users
-            else if (rows.length > 0) {
-                res.json(rows[0]);
-                connection.release();
-            }
-            // Could not find user
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    User.findById(req.params.id)
+    .select('-__v')
+    .exec(function(err, project) {
+        if (err) return next(err);
+        res.json(project);
     });
 };
 
 // Register a user
 exports.add = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var salt = bcrypt.genSaltSync(10);
-        var hash = bcrypt.hashSync(req.body.password, salt);
-        var query = 'INSERT INTO projmanage.users (email, firstname, ' +
-                    'lastname, password, created) VALUES (' +
-                    pool.escape(req.body.email) + ', ' +
-                    pool.escape(req.body.firstname) + ', ' +
-                    pool.escape(req.body.lastname) + ', ' +
-                    pool.escape(hash) + ', NOW());';
-        console.log(query);
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                console.log(err);
-                connection.release();
-                next(err);
-            }
-            // User was created
-            else {
-                res.status(201).json({"message": "User Registered!"});
-                connection.release();
-            }
-        });
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(req.body.password, salt);
+    var newUser = new User();
+    newUser.email = req.body.email;
+    newUser.first_name = req.body.first_name;
+    newUser.last_name = req.body.last_name;
+    newUser.password = hash;
+    //console.log(newUser);
+    newUser.save(function(err, newUser) {
+        if (err) return next(err);
+        res.status(201).json({"message": "User Registered!"});
     });
 };
 
-// Update a specific user
+// Update a specific user (no password)
 exports.update = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'UPDATE projmanage.users SET email = ' +
-                    pool.escape(req.body.email) + ', firstname = ' +
-                    pool.escape(req.body.firstname) + ', lastname = ' +
-                    pool.escape(req.body.lastname) + ', password = ' +
-                    pool.escape(req.body.password) + ' WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if a user was updated
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "User Updated!"});
-                connection.release();
-            }
-            // User does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
+    User.findById(req.params.id, function(err, project) {
+        if (err) return next(err);
+        project.email = req.body.email;
+        project.first_name = req.body.first_name;
+        project.last_name = req.body.last_name;
+        project.save(function(err, project) {
+            if (err) return next(err);
+            res.json({"message": "User Updated!"});
         });
     });
 };
 
 // Delete a specific user
 exports.delete = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'DELETE FROM projmanage.users WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if a user was deleted
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "User Deleted!"});
-                connection.release();
-            }
-            // User does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    User.remove(
+        {_id: req.params.id},
+        function(err, user) {
+            if (err) return next(err);
+            res.json({"message": "User Deleted!"});
     });
 };

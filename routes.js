@@ -8,7 +8,7 @@ module.exports = function (app) {
 
     // Authenticate
     var authenticate = require('./controllers/authenticate');
-    app.post('/authenticate', authenticate.login);
+    app.post('/authenticate/', authenticate.login);
 
     // Projects
     var projects = require('./controllers/projects');

@@ -1,53 +1,22 @@
 'use strict';
 
-var mysql = require('mysql');
+var Task = require('../models/task.js');
 
 // Get all tasks
 exports.findAll = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner, ' +
-                'parent_project FROM projmanage.tasks;';
-    pool.getConnection(function(err, connection) {
-        connection.query(query, function(err, rows) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Return the tasks
-            else {
-                res.json(rows);
-                connection.release();
-            }
-        });
+    Task.find().select('-__v').exec(function(err, tasks) {
+        if (err) return next(err);
+        res.json(tasks);
     });
 };
 
 // Get a specific task
 exports.findById = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner, ' +
-                'parent_project FROM projmanage.tasks WHERE id = ' +
-                pool.escape(req.params.id) + ';';
-    pool.getConnection(function(err, connection) {
-        connection.query(query, function(err, rows) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if there are any users
-            else if (rows.length > 0) {
-                // Return the task
-                res.json(rows[0]);
-                connection.release();
-            }
-            // No task with that ID exists
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    Task.findById(req.params.id)
+    .select('-__v')
+    .exec(function(err, project) {
+        if (err) return next(err);
+        res.json(project);
     });
 };
 

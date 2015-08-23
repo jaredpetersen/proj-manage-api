@@ -15,21 +15,21 @@ describe('Users', function(){
             // When there are users
             if (res.body.length > 0) {
                 // User ID
-                expect(res.body[0]).to.have.property("id");
-                expect(res.body[0].id).to.not.equal(null);
-                expect(res.body[0].id).to.be.a('Number');
+                expect(res.body[0]).to.have.property("_id");
+                expect(res.body[0]._id).to.not.equal(null);
+                expect(res.body[0]._id).to.be.a('String');
                 // Email
                 expect(res.body[0]).to.have.property("email");
                 expect(res.body[0].email).to.not.equal(null);
                 expect(res.body[0].email).to.be.a('String');
                 // First Name
-                expect(res.body[0]).to.have.property("firstname");
-                expect(res.body[0].firstname).to.not.equal(null);
-                expect(res.body[0].firstname).to.be.a('String');
+                expect(res.body[0]).to.have.property("first_name");
+                expect(res.body[0].first_name).to.not.equal(null);
+                expect(res.body[0].first_name).to.be.a('String');
                 // Last Name
-                expect(res.body[0]).to.have.property("lastname");
-                expect(res.body[0].lastname).to.not.equal(null);
-                expect(res.body[0].lastname).to.be.a('String');
+                expect(res.body[0]).to.have.property("last_name");
+                expect(res.body[0].last_name).to.not.equal(null);
+                expect(res.body[0].last_name).to.be.a('String');
                 // Created
                 expect(res.body[0]).to.have.property("created");
                 expect(res.body[0].created).to.not.equal(null);
@@ -40,28 +40,28 @@ describe('Users', function(){
     });
 
     it('Gets a single user', function(done){
-        api.get('/users/4')
+        api.get('/users/55d8e649090823d915a9ec5c')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Object');
             // User ID
-            expect(res.body).to.have.property("id");
-            expect(res.body.id).to.not.equal(null);
-            expect(res.body.id).to.be.a('Number');
+            expect(res.body).to.have.property("_id");
+            expect(res.body._id).to.not.equal(null);
+            expect(res.body._id).to.be.a('String');
             // Email
             expect(res.body).to.have.property("email");
             expect(res.body.email).to.not.equal(null);
             expect(res.body.email).to.be.a('String');
             // First Name
-            expect(res.body).to.have.property("firstname");
-            expect(res.body.firstname).to.not.equal(null);
-            expect(res.body.firstname).to.be.a('String');
+            expect(res.body).to.have.property("first_name");
+            expect(res.body.first_name).to.not.equal(null);
+            expect(res.body.first_name).to.be.a('String');
             // Last Name
-            expect(res.body).to.have.property("lastname");
-            expect(res.body.lastname).to.not.equal(null);
-            expect(res.body.lastname).to.be.a('String');
+            expect(res.body).to.have.property("last_name");
+            expect(res.body.last_name).to.not.equal(null);
+            expect(res.body.last_name).to.be.a('String');
             // Created
             expect(res.body).to.have.property("created");
             expect(res.body.created).to.not.equal(null);
