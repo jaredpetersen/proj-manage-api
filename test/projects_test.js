@@ -22,34 +22,38 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/55d8ca28980ceb6414a108e0')
+        api.get('/projects/55dac803285b86d51966a18b')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Object');
             // Project ID
-            expect(res.body).to.have.property("_id");
+            expect(res.body).to.have.property('_id');
             expect(res.body._id).to.not.equal(null);
             expect(res.body._id).to.be.a('String');
             // Name
-            expect(res.body).to.have.property("name");
+            expect(res.body).to.have.property('name');
             expect(res.body.name).to.not.equal(null);
             expect(res.body.name).to.be.a('String');
             // Description
-            expect(res.body).to.have.property("description");
+            expect(res.body).to.have.property('description');
             expect(res.body.description).to.not.equal(null);
             expect(res.body.description).to.be.a('String');
             // Created
-            expect(res.body).to.have.property("created");
+            expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
             expect(res.body.created).to.be.a('String');
             // Owner
-            expect(res.body).to.have.property("owner");
+            expect(res.body).to.have.property('owner');
             expect(res.body.owner).to.not.equal(null);
             expect(res.body.owner).to.be.a('String');
             // Members
-            expect(res.body).to.have.property("members");
+            expect(res.body).to.have.property('members');
+            expect(res.body.members).to.not.equal(null);
+            expect(res.body.members).to.be.an('Array');
+            // Tasks
+            expect(res.body).to.have.property('members');
             expect(res.body.members).to.not.equal(null);
             expect(res.body.members).to.be.an('Array');
             done();
@@ -64,7 +68,7 @@ describe('Projects', function(){
             // Overall
             expect(res.body).to.be.a('Object');
             // Project ID
-            expect(res.body).to.have.property("message");
+            expect(res.body).to.have.property('message');
             expect(res.body.message).to.not.equal(null);
             expect(res.body.message).to.be.a('String');
             expect(res.body.message).to.equal('Not Found');

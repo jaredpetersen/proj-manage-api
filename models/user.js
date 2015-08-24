@@ -17,7 +17,11 @@ var userSchema = new Schema({
 // Update user references in database when a user is deleted
 userSchema.pre('remove', function (next) {
     // Remove models with this user as the owner
-    Project.remove({owner: this._id}).exec();
+    // TODO - Look into making this hook up to the other middleware
+    //Project.remove({owner: this._id}).exec();
+    Project.find({owner: this._id}, function(err, project) {
+        
+    });
     Task.remove({owner: this._id}).exec();
     Subtask.remove({owner: this._id}).exec();
     // Update members to reflect the new change

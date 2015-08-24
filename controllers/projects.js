@@ -52,10 +52,17 @@ exports.update = function(req, res, next) {
 
 // Delete a specific project
 exports.delete = function(req, res, next) {
-    Project.findByIdAndRemove({_id: req.params.id}, function(err, project) {
+    // Can't use findByIdAndRemove() or Model.remove() in order to invoke
+    // the middleware:
+    // https://github.com/Automattic/mongoose/issues/964
+    // Have to invoke remove() on a document
+    Project.findById(req.params.id, function(err, project) {
         if (err) return next(err);
-        // Return 404 for a nonexistant project
+        // Return 404 for a nonexistant user
         if (project == null) return next(errors.newError(404));
-        res.json({"message": "Project Deleted!"});
+        project.remove(function(err, project) {
+            if (err) return next(err);
+            res.json({"message": "Project Deleted!"});
+        });
     });
 };
