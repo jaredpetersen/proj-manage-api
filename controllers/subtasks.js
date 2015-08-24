@@ -1,134 +1,62 @@
 'use strict';
 
-var mysql = require('mysql');
+var Subtask = require('../models/subtask.js');
+var errors = require('./errors.js');
 
 // Get all subtasks
 exports.findAll = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner, parent_task ' +
-                'FROM projmanage.subtasks;';
-    pool.getConnection(function(err, connection) {
-        connection.query(query, function(err, rows) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Return the subtasks
-            else {
-                res.json(rows);
-                connection.release();
-            }
-        });
+    Subtask.find(null, '-__v', function(err, subtasks) {
+        if (err) return next(err);
+        res.json(subtasks);
     });
 };
 
 // Get a specific subtask
 exports.findById = function(req, res, next) {
-    var query = 'SELECT id, name, description, created, owner, parent_task ' +
-                'FROM projmanage.subtasks WHERE id = ' +
-                pool.escape(req.params.id) + ';';
-    pool.getConnection(function(err, connection) {
-        connection.query(query, function(err, rows) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if there are any users
-            else if (rows.length > 0) {
-                // Return the subtask
-                res.json(rows[0]);
-                connection.release();
-            }
-            // No subtask with that ID exists
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    Subtask.findById(req.params.id, '-__v', function(err, subtask) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant subtask
+        if (subtask == null) return next(errors.newError(404));
+        res.json(subtask);
     });
 };
 
 // Add a new subtask
 exports.add = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'INSERT INTO projmanage.subtasks (name, description, ' +
-                    'created, owner, parent_task) VALUES (' +
-                    pool.escape(req.body.name) + ', ' +
-                    pool.escape(req.body.description) + ', ' +
-                    'NOW(), ' + pool.escape(req.body.owner) + ', ' +
-                    pool.escape(req.body.parent_task) + ');';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // subtask was created
-            else {
-                res.status(201).json({"message": "Subtask Created!"});
-                connection.release();
-            }
-        });
+    var newSubtask = new Subtask();
+    newSubtask.name = req.body.name;
+    newSubtask.description = req.body.description;
+    newSubtask.owner = req.body.owner;
+    newSubtask.parent_task = req.body.parent_task;
+    newSubtask.save(function(err, newSubtask) {
+        if (err) return next(err);
+        res.status(201).json({"message": "Subtask Created!"});
     });
 };
 
 // Update a specific subtask
 exports.update = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'UPDATE projmanage.subtasks SET name = ' +
-                    pool.escape(req.body.name) + ', description = ' +
-                    pool.escape(req.body.description) + ', owner = ' +
-                    pool.escape(req.body.owner) + ', parent_task = ' +
-                    pool.escape(req.body.parent_task) + ' WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if the subtask was updated
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "Subtask Updated!"});
-                connection.release();
-            }
-            // subtask does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
+    Subtask.findById(req.params.id, function(err, subtask) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant subtask
+        if (user == null) return next(errors.newError(404));
+        subtask.name = req.body.name;
+        subtask.description = req.body.description;
+        subtask.owner = req.body.owner;
+        newSubtask.parent_task = req.body.parent_task;
+        subtask.save(function(err, subtask) {
+            if (err) return next(err);
+            res.json({"message": "Subtask Updated!"});
         });
     });
 };
 
 // Delete a specific subtask
 exports.delete = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'DELETE FROM projmanage.subtasks WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if a subtask was deleted
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "Subtask Deleted!"});
-                connection.release();
-            }
-            // subtask does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    Subtask.findByIdAndRemove({_id: req.params.id}, function(err, subtask) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant subtask
+        if (subtask == null) return next(errors.newError(404));
+        res.json({"message": "Subtask Deleted!"});
     });
 };

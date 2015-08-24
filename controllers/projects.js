@@ -1,10 +1,11 @@
 'use strict';
 
 var Project = require('../models/project.js');
+var errors = require('./errors.js');
 
 // Get all projects
 exports.findAll = function(req, res, next) {
-    Project.find().select('-__v').exec(function(err, projects) {
+    Project.find(null, '-__v', function(err, projects) {
         if (err) return next(err);
         res.json(projects);
     });
@@ -14,6 +15,8 @@ exports.findAll = function(req, res, next) {
 exports.findById = function(req, res, next) {
     Project.findById(req.params.id, '-__v', function(err, project) {
         if (err) return next(err);
+        // Return 404 for a nonexistant project
+        if (project == null) return next(errors.newError(404));
         res.json(project);
     });
 };
@@ -35,6 +38,8 @@ exports.add = function(req, res, next) {
 exports.update = function(req, res, next) {
     Project.findById(req.params.id, function(err, project) {
         if (err) return next(err);
+        // Return 404 for a nonexistant project
+        if (user == null) return next(errors.newError(404));
         project.name = req.body.name;
         project.description = req.body.description;
         project.owner = req.body.owner;
@@ -47,10 +52,10 @@ exports.update = function(req, res, next) {
 
 // Delete a specific project
 exports.delete = function(req, res, next) {
-    Project.remove(
-        {_id: req.params.id},
-        function(err, project) {
-            if (err) return next(err);
-            res.json({"message": "Project Deleted!"});
+    Project.findByIdAndRemove({_id: req.params.id}, function(err, project) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant project
+        if (project == null) return next(errors.newError(404));
+        res.json({"message": "Project Deleted!"});
     });
 };

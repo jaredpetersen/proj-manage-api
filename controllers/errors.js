@@ -28,3 +28,12 @@ exports.nullRoute = function(req, res, next) {
     // Requested route just doesn't exist
     res.status(404).json({"message": "Not Found"});
 };
+
+// We have to do some extra error handling because Mongoose sometimes sends
+// us back dumb information. Part of this is related to the following bug:
+// https://github.com/Automattic/mongoose/issues/3270
+exports.newError = function(statusCode) {
+    var err = new Error();
+    err.status = statusCode;
+    return err;
+}

@@ -1,10 +1,11 @@
 'use strict';
 
 var Task = require('../models/task.js');
+var errors = require('./errors.js');
 
 // Get all tasks
 exports.findAll = function(req, res, next) {
-    Task.find().select('-__v').exec(function(err, tasks) {
+    Task.find(null, '-__v', function(err, tasks) {
         if (err) return next(err);
         res.json(tasks);
     });
@@ -12,92 +13,48 @@ exports.findAll = function(req, res, next) {
 
 // Get a specific task
 exports.findById = function(req, res, next) {
-    Task.findById(req.params.id)
-    .select('-__v')
-    .exec(function(err, project) {
+    Task.findById(req.params.id, '-__v', function(err, task) {
         if (err) return next(err);
-        res.json(project);
+        // Return 404 for a nonexistant task
+        if (task == null) return next(errors.newError(404));
+        res.json(task);
     });
 };
 
 // Add a new task
 exports.add = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'INSERT INTO projmanage.tasks (name, description, ' +
-                    'created, owner, parent_project) VALUES (' +
-                    pool.escape(req.body.name) + ', ' +
-                    pool.escape(req.body.description) + ', ' +
-                    'NOW(), ' + pool.escape(req.body.owner) + ', ' +
-                    pool.escape(req.body.parent_project) + ');';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // task was created
-            else {
-                res.status(201).json({"message": "Task Created!"});
-                connection.release();
-            }
-        });
+    var newTask = new Task();
+    newTask.name = req.body.name;
+    newTask.description = req.body.description;
+    newTask.owner = req.body.owner;
+    newTask.save(function(err, newTask) {
+        if (err) return next(err);
+        res.status(201).json({"message": "Task Created!"});
     });
 };
 
 // Update a specific task
 exports.update = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'UPDATE projmanage.tasks SET name = ' +
-                    pool.escape(req.body.name) + ', description = ' +
-                    pool.escape(req.body.description) + ', owner = ' +
-                    pool.escape(req.body.owner) + ', parent_project = ' +
-                    pool.escape(req.body.parent_project) + ' WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if the task was updated
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "Task Updated!"});
-                connection.release();
-            }
-            // task does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
+    Task.findById(req.params.id, function(err, task) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant task
+        if (user == null) return next(errors.newError(404));
+        task.name = req.body.name;
+        task.description = req.body.description;
+        task.owner = req.body.owner;
+        task.save(function(err, task) {
+            if (err) return next(err);
+            res.json({"message": "Task Updated!"});
         });
     });
 };
 
 // Delete a specific task
 exports.delete = function(req, res, next) {
-    pool.getConnection(function(err, connection) {
-        var query = 'DELETE FROM projmanage.tasks WHERE id = ' +
-                    pool.escape(req.params.id) + ';';
-        connection.query(query, function(err, rows, fields) {
-            // Check for errors
-            if (err) {
-                connection.release();
-                next(err);
-            }
-            // Check if a task was deleted
-            else if (rows["affectedRows"] > 0) {
-                res.json({"message": "Task Deleted!"});
-                connection.release();
-            }
-            // task does not exist
-            else {
-                connection.release();
-                var err = new Error();
-                err.status = 404;
-                next(err);
-            }
-        });
+    Task.findByIdAndRemove({_id: req.params.id}, function(err, task) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant task
+        if (task == null) return next(errors.newError(404));
+        res.json({"message": "Task Deleted!"});
     });
 };
