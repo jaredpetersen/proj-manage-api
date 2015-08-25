@@ -3,21 +3,20 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Task = require('./task.js');
+var Subtask = require('./subtask.js');
 
 var projectSchema = new mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String},
     created: {type: Date, default: Date.now},
     owner: {type : Schema.Types.ObjectId, ref: 'User', required: true},
-    members: [{type : Schema.Types.ObjectId, ref: 'User', required: true}],
-    tasks: [{type : Schema.Types.ObjectId, ref: 'Task'}]
+    members: [{type : Schema.Types.ObjectId, ref: 'User', required: true}]
 });
 
-// Remove project references in database when a user is deleted
-projectSchema.pre('remove', function (next) {
-    // Remove all of the associated tasks
-    Task.remove({_id: this.tasks}).exec();
-    next();
+// Provides our cascading delete functionality
+projectSchema.pre('remove', function(next) {
+    Task.remove({owner: this._id}).exec();
+    Subtask.remove({owner: this._id}).exec();
 });
 
 var Project = mongoose.model('Project', projectSchema);

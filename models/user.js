@@ -14,20 +14,19 @@ var userSchema = new Schema({
     created: {type: Date, default: Date.now}
 });
 
-// Update user references in database when a user is deleted
-userSchema.pre('remove', function (next) {
-    // Remove models with this user as the owner
-    // TODO - Look into making this hook up to the other middleware
-    //Project.remove({owner: this._id}).exec();
-    Project.find({owner: this._id}, function(err, project) {
-        
+// Provides our cascading delete functionality
+userSchema.pre('remove', function(next) {
+    // Delete all projects associated with the user
+    // Have to do it this way so that the project middleware is called
+    Project.find({owner: this._id}, function(err, projects) {
+        projects.forEach(function(project) {
+            Project.findById(project['_id'], function(err, project) {
+                project.remove(function(err, project){});
+            })
+        });
     });
     Task.remove({owner: this._id}).exec();
     Subtask.remove({owner: this._id}).exec();
-    // Update members to reflect the new change
-    Project.update({members: this._id},
-                   {'$pullAll': {members: [this._id]}},
-                   {multi: true}).exec();
     next();
 });
 

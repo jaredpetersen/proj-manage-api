@@ -40,7 +40,7 @@ describe('Users', function(){
     });
 
     it('Gets a single user', function(done){
-        api.get('/users/55dac7d0285b86d51966a18a')
+        api.get('/users/55dc18756e00ea1603ed002a')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -64,8 +64,8 @@ describe('Users', function(){
             expect(res.body.last_name).to.be.a('String');
             // Password
             expect(res.body).to.have.property('password');
-            expect(res.body.last_name).to.not.equal(null);
-            expect(res.body.last_name).to.be.a('String');
+            expect(res.body.password).to.not.equal(null);
+            expect(res.body.password).to.be.a('String');
             // Created
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);

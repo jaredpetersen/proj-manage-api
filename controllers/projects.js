@@ -25,7 +25,7 @@ exports.findById = function(req, res, next) {
 exports.add = function(req, res, next) {
     var newProject = new Project();
     newProject.name = req.body.name;
-    newProject.description = req.body.description;
+    newProject.description = req.body.description || null;
     newProject.owner = req.body.owner;
     newProject.members = req.body.owner;
     newProject.save(function(err, newUser) {

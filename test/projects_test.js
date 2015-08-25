@@ -22,7 +22,7 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/55dac803285b86d51966a18b')
+        api.get('/projects/55dc1943dd0cab34033417dc')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -38,8 +38,6 @@ describe('Projects', function(){
             expect(res.body.name).to.be.a('String');
             // Description
             expect(res.body).to.have.property('description');
-            expect(res.body.description).to.not.equal(null);
-            expect(res.body.description).to.be.a('String');
             // Created
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
@@ -49,10 +47,6 @@ describe('Projects', function(){
             expect(res.body.owner).to.not.equal(null);
             expect(res.body.owner).to.be.a('String');
             // Members
-            expect(res.body).to.have.property('members');
-            expect(res.body.members).to.not.equal(null);
-            expect(res.body.members).to.be.an('Array');
-            // Tasks
             expect(res.body).to.have.property('members');
             expect(res.body.members).to.not.equal(null);
             expect(res.body.members).to.be.an('Array');

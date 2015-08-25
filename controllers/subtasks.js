@@ -25,9 +25,10 @@ exports.findById = function(req, res, next) {
 exports.add = function(req, res, next) {
     var newSubtask = new Subtask();
     newSubtask.name = req.body.name;
-    newSubtask.description = req.body.description;
-    newSubtask.owner = req.body.owner;
-    newSubtask.parent_task = req.body.parent_task;
+    newSubtask.description = req.body.description || null;
+    newSubtask.owner = req.body.owner || null;
+    newSubtask.project = req.body.project;
+    newSubtask.task = req.body.task;
     newSubtask.save(function(err, newSubtask) {
         if (err) return next(err);
         res.status(201).json({"message": "Subtask Created!"});
@@ -43,7 +44,8 @@ exports.update = function(req, res, next) {
         subtask.name = req.body.name;
         subtask.description = req.body.description;
         subtask.owner = req.body.owner;
-        newSubtask.parent_task = req.body.parent_task;
+        subtask.project = req.body.project;
+        subtask.task = req.body.task;
         subtask.save(function(err, subtask) {
             if (err) return next(err);
             res.json({"message": "Subtask Updated!"});

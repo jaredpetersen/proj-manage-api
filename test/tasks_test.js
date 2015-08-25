@@ -22,7 +22,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/tasks/55dac88d285b86d51966a18d')
+        api.get('/tasks/55dc1a12dd0cab34033417e0')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -38,16 +38,16 @@ describe('Tasks', function(){
             expect(res.body.name).to.be.a('String');
             // Description
             expect(res.body).to.have.property('description');
-            expect(res.body.description).to.not.equal(null);
-            expect(res.body.description).to.be.a('String');
             // Created
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
             expect(res.body.created).to.be.a('String');
             // Owner
             expect(res.body).to.have.property('owner');
-            expect(res.body.owner).to.not.equal(null);
-            expect(res.body.owner).to.be.a('String');
+            // Project
+            expect(res.body).to.have.property('project');
+            expect(res.body.project).to.not.equal(null);
+            expect(res.body.project).to.be.a('String');
             done();
         });
     });

@@ -25,8 +25,9 @@ exports.findById = function(req, res, next) {
 exports.add = function(req, res, next) {
     var newTask = new Task();
     newTask.name = req.body.name;
-    newTask.description = req.body.description;
-    newTask.owner = req.body.owner;
+    newTask.description = req.body.description || null;
+    newTask.owner = req.body.owner || null;
+    newTask.project = req.body.project;
     newTask.save(function(err, newTask) {
         if (err) return next(err);
         res.status(201).json({"message": "Task Created!"});
@@ -42,6 +43,7 @@ exports.update = function(req, res, next) {
         task.name = req.body.name;
         task.description = req.body.description;
         task.owner = req.body.owner;
+        task.project = req.body.project;
         task.save(function(err, task) {
             if (err) return next(err);
             res.json({"message": "Task Updated!"});
