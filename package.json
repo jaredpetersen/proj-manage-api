@@ -16,8 +16,8 @@
     "jsonwebtoken": "^5.0.4",
     "mocha": "^2.2.5",
     "mongoose": "^4.1.3",
+    "mongoose-id-validator": "^0.1.8",
     "morgan": "^1.6.1",
-    "mysql": "^2.7.0",
     "pm2": "^0.14.3"
   },
   "devDependencies": {

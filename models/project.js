@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Task = require('./task.js');
 var Subtask = require('./subtask.js');
+var idValidator = require('mongoose-id-validator');
 
 var projectSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -18,6 +19,8 @@ projectSchema.pre('remove', function(next) {
     Task.remove({owner: this._id}).exec();
     Subtask.remove({owner: this._id}).exec();
 });
+
+projectSchema.plugin(idValidator);
 
 var Project = mongoose.model('Project', projectSchema);
 module.exports = Project;

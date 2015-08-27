@@ -22,7 +22,7 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/subtasks/55dc1f4e0563198803325a21')
+        api.get('/subtasks/55dea74ee74c7bb807fec477')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -44,10 +44,6 @@ describe('Subtasks', function(){
             expect(res.body.created).to.be.a('String');
             // Owner
             expect(res.body).to.have.property('owner');
-            // Project
-            expect(res.body).to.have.property('project');
-            expect(res.body.project).to.not.equal(null);
-            expect(res.body.project).to.be.a('String');
             // Task
             expect(res.body).to.have.property('task');
             expect(res.body.task).to.not.equal(null);

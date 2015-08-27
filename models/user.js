@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var Project = require('./project.js');
 var Task = require('./task.js');
 var Subtask = require('./subtask.js');
+var idValidator = require('mongoose-id-validator');
 
 var userSchema = new Schema({
     email: {type: String, required: true},
@@ -29,6 +30,8 @@ userSchema.pre('remove', function(next) {
     Subtask.remove({owner: this._id}).exec();
     next();
 });
+
+userSchema.plugin(idValidator);
 
 var User = mongoose.model('User', userSchema);
 module.exports = User;

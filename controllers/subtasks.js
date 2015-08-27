@@ -27,7 +27,6 @@ exports.add = function(req, res, next) {
     newSubtask.name = req.body.name;
     newSubtask.description = req.body.description || null;
     newSubtask.owner = req.body.owner || null;
-    newSubtask.project = req.body.project;
     newSubtask.task = req.body.task;
     newSubtask.save(function(err, newSubtask) {
         if (err) return next(err);
@@ -44,7 +43,6 @@ exports.update = function(req, res, next) {
         subtask.name = req.body.name;
         subtask.description = req.body.description;
         subtask.owner = req.body.owner;
-        subtask.project = req.body.project;
         subtask.task = req.body.task;
         subtask.save(function(err, subtask) {
             if (err) return next(err);
