@@ -56,9 +56,7 @@ exports.update = function(req, res, next) {
 // Delete a specific user
 exports.delete = function(req, res, next) {
     // Can't use findByIdAndRemove() or Model.remove() in order to invoke
-    // the middleware:
-    // https://github.com/Automattic/mongoose/issues/964
-    // Have to invoke remove() on a document
+    // the middleware; Have to remove a specific document
     User.findById(req.params.id, function(err, user) {
         if (err) return next(err);
         // Return 404 for a nonexistant user

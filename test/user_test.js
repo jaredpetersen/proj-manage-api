@@ -40,7 +40,7 @@ describe('Users', function(){
     });
 
     it('Gets a single user', function(done){
-        api.get('/users/55dc18756e00ea1603ed002a')
+        api.get('/users/55ebab212f8851540ea0397f')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

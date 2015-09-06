@@ -12,9 +12,30 @@ describe('Subtasks', function(){
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Array');
-            // When there are subtasks
+            // When there are users
             if (res.body.length > 0) {
-                // Update this when there are actually subtasks
+                // Overall
+                expect(res.body[0]).to.be.a('Object');
+                // Subtask ID
+                expect(res.body[0]).to.have.property('_id');
+                expect(res.body[0]._id).to.not.equal(null);
+                expect(res.body[0]._id).to.be.a('String');
+                // Name
+                expect(res.body[0]).to.have.property('name');
+                expect(res.body[0].name).to.not.equal(null);
+                expect(res.body[0].name).to.be.a('String');
+                // Description
+                expect(res.body[0]).to.have.property('description');
+                // Created
+                expect(res.body[0]).to.have.property('created');
+                expect(res.body[0].created).to.not.equal(null);
+                expect(res.body[0].created).to.be.a('String');
+                // Owner
+                expect(res.body[0]).to.have.property('owner');
+                // Task
+                expect(res.body[0]).to.have.property('task');
+                expect(res.body[0].task).to.not.equal(null);
+                expect(res.body[0].task).to.be.a('String');
             }
             done();
         });
@@ -22,7 +43,7 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/subtasks/55dea74ee74c7bb807fec477')
+        api.get('/subtasks/55ebab992f8851540ea03985')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

@@ -14,7 +14,30 @@ describe('Projects', function(){
             expect(res.body).to.be.a('Array');
             // When there are projects
             if (res.body.length > 0) {
-                // Update this when there are actually projects
+                // Overall
+                expect(res.body[0]).to.be.a('Object');
+                // Project ID
+                expect(res.body[0]).to.have.property('_id');
+                expect(res.body[0]._id).to.not.equal(null);
+                expect(res.body[0]._id).to.be.a('String');
+                // Name
+                expect(res.body[0]).to.have.property('name');
+                expect(res.body[0].name).to.not.equal(null);
+                expect(res.body[0].name).to.be.a('String');
+                // Description
+                expect(res.body[0]).to.have.property('description');
+                // Created
+                expect(res.body[0]).to.have.property('created');
+                expect(res.body[0].created).to.not.equal(null);
+                expect(res.body[0].created).to.be.a('String');
+                // Owner
+                expect(res.body[0]).to.have.property('owner');
+                expect(res.body[0].owner).to.not.equal(null);
+                expect(res.body[0].owner).to.be.a('String');
+                // Members
+                expect(res.body[0]).to.have.property('members');
+                expect(res.body[0].members).to.not.equal(null);
+                expect(res.body[0].members).to.be.an('Array');
             }
             done();
         });
@@ -22,7 +45,7 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/55dc1943dd0cab34033417dc')
+        api.get('/projects/55ebab432f8851540ea03981')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

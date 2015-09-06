@@ -12,9 +12,30 @@ describe('Tasks', function(){
         .end(function(err, res) {
             // Overall
             expect(res.body).to.be.a('Array');
-            // When there are tasks
+            // When there are users
             if (res.body.length > 0) {
-                // Update this when there are actually projects
+                // Overall
+                expect(res.body[0]).to.be.a('Object');
+                // Task ID
+                expect(res.body[0]).to.have.property('_id');
+                expect(res.body[0]._id).to.not.equal(null);
+                expect(res.body[0]._id).to.be.a('String');
+                // Name
+                expect(res.body[0]).to.have.property('name');
+                expect(res.body[0].name).to.not.equal(null);
+                expect(res.body[0].name).to.be.a('String');
+                // Description
+                expect(res.body[0]).to.have.property('description');
+                // Created
+                expect(res.body[0]).to.have.property('created');
+                expect(res.body[0].created).to.not.equal(null);
+                expect(res.body[0].created).to.be.a('String');
+                // Project
+                expect(res.body[0]).to.have.property('project');
+                expect(res.body[0].project).to.not.equal(null);
+                expect(res.body[0].project).to.be.a('String');
+                // Owner
+                expect(res.body[0]).to.have.property('owner');
             }
             done();
         });
@@ -22,7 +43,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/tasks/55dc1a12dd0cab34033417e0')
+        api.get('/tasks/55ebab682f8851540ea03983')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

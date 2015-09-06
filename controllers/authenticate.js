@@ -8,18 +8,9 @@ var config = require('../config');
 
 // Authenticate the user
 exports.login = function(req, res, next) {
-    User.findOne({email: undefined}, function(err, user) {
-        // Have to manually check for email, because Mongoose will return
-        // the first document if you pass in undefined. Track this issue
-        // here: https://github.com/Automattic/mongoose/issues/3270
-        if (req.body.email == undefined || req.body.password == undefined) {
-            var err = new Error();
-            err.status = 400;
-            return next(err);
-        }
-        // User exist, make sure the password is correct
-        else if (user != null &&
-                 bcrypt.compareSync(req.body.password, user.password)) {
+    User.findOne({email: req.body.email}, function(err, user) {
+        if (user != null &&
+            bcrypt.compareSync(req.body.password, user.password)) {
             // Create the JSON token
             // Look into adding a JTI in the future for additional security
             var token = jwt.sign(
