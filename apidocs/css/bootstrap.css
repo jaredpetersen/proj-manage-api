@@ -4037,11 +4037,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   display: block;
   padding: 10px 15px;
+  color: #333 !important;
 }
 .nav > li > a:hover,
 .nav > li > a:focus {
-  text-decoration: none;
-  background-color: #eee;
+  text-decoration: underline;
 }
 .nav > li.disabled > a {
   color: #777;
@@ -4141,16 +4141,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   float: left;
 }
 .nav-pills > li > a {
-  border-radius: 4px;
+  border-radius: 0px;
+  font-weight: 500;
+
 }
 .nav-pills > li + li {
-  margin-left: 2px;
+  margin-left: 3px;
 }
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
-  color: #fff;
-  background-color: #337ab7;
+  color: #EA4335;
+  border-left: thick solid #EA4335;
+  text-decoration: none;
+  padding-left: 10px;
 }
 .nav-stacked > li {
   float: none;
@@ -4221,6 +4225,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   min-height: 50px;
   margin-bottom: 20px;
   border: 1px solid transparent;
+}
+@media (min-width: 0px) and (max-width: 225px) {
+    .navbar {
+      display: none;
+    }
 }
 @media (min-width: 480px) {
     .navbar {
@@ -4369,6 +4378,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   width: 22px;
   height: 2px;
   border-radius: 1px;
+  background-color: #333 !important;
 }
 .navbar-toggle .icon-bar + .icon-bar {
   margin-top: 4px;
@@ -4552,11 +4562,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   border-color: #e7e7e7;
 }
 .navbar-default .navbar-brand {
-  color: #777;
+  color: #333;
 }
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #5e5e5e;
   background-color: transparent;
 }
 .navbar-default .navbar-text {
@@ -4583,11 +4592,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  border-color: #ddd;
+  border-color: #fff;
 }
-.navbar-default .navbar-toggle:hover,
-.navbar-default .navbar-toggle:focus {
-  background-color: #ddd;
+.navbar-default .navbar-toggle:hover {
+    color: #EA4335;
 }
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #888;
@@ -6804,22 +6812,66 @@ button.close {
     display: none !important;
   }
 }
-/* Tangram Custom Styling */
+/* Tangram Custom Styling (other than previous mods)*/
+
 .sidebar {
-    position: fixed;
-    top: 0px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    width: 180px;
+    display: none;
 }
 .content {
-    padding-left: 190px;
-    padding-right: 10px;
+    margin-top: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+.rel-link-top {
+    position: relative;
+    top: -40px;
+}
+.rel-link-body {
+    position: relative;
+    top: -30px;
+}
+@media (min-width: 480px) {
+    .sidebar {
+        position: fixed;
+        top: 0px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: 180px;
+    }
+    .content {
+        margin-top: 0px;
+        padding-left: 190px;
+        padding-right: 20px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .rel-link-top {
+        position: relative;
+        top: 0px;
+    }
+    .rel-link-body {
+        position: relative;
+        top: 10px;
+    }
+}
+@media (min-width: 0px) and (max-width: 225px) {
+    .content {
+      margin-top: 0px;
+    }
+}
+.logo {
+    font-weight: 700;
+    margin: 0;
+}
+.logo-api {
+    font-weight: 300;
+    color: #EA4335;
 }
 /*# sourceMappingURL=bootstrap.css.map */
