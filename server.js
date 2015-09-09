@@ -10,6 +10,9 @@ var morgan = require('morgan');
 var logDirectory = __dirname + '/log';
 var config = require('./config');
 
+// Include API docs
+app.use(express.static(__dirname + '/apidocs/'));
+
 // Database connection
 mongoose.connect(config.dbHost)
 
