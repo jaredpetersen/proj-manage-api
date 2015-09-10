@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>api | tangram</title>
+        <title>tangram api</title>
         <link href='https://fonts.googleapis.com/css?family=Raleway:300,400,500,700' rel='stylesheet' type='text/css'>
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -35,7 +35,7 @@
                                 <li><a href="#intro">introduction</a></li>
                                 <li><a href="#auth">authentication</a></li>
                                 <li><a href="#users">users</a></li>
-                                <li><a href="#posts">posts</a></li>
+                                <li><a href="#projects">projects</a></li>
                                 <li><a href="#tasks">tasks</a></li>
                                 <li><a href="#subtasks">subtasks</a></li>
                             </ul>
@@ -49,12 +49,12 @@
                         <nav id="navsidebar">
                         <ul class="nav nav-pills nav-stacked">
                             <li style="margin-bottom: 20px;">
-                                <h3 class="logo">tangram <span class="logo-api">api</span></h3>
+                                <h3 class="logo"><a class="brand-link" href="http://api.tangr.am/">tangram <span class="logo-api">api</span></a></h3>
                             </li>
                             <li><a href="#intro">introduction</a></li>
                             <li><a href="#auth">authentication</a></li>
                             <li><a href="#users">users</a></li>
-                            <li><a href="#posts">posts</a></li>
+                            <li><a href="#projects">projects</a></li>
                             <li><a href="#tasks">tasks</a></li>
                             <li><a href="#subtasks">subtasks</a></li>
                         </ul>
@@ -62,24 +62,702 @@
                     </div>
                 </div>
                 <div class="content">
+                    <!-- Introduction -->
                     <div id="intro" class="rel-link-top"></div>
                     <h3 class="page-header" style="margin-top: 20px">introduction</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
+                    <p>
+                        The Tangram API is organized around REST and is designed to be fairly predictable and ordinary.
+                        Similar to many REST APIs, the Tangram API is designed to have intuitive URLs that indicate
+                        what you're querying and utilize HTTP response codes in order to indicate the success or failure
+                        of your call. All responses, including errors, are in JSON format.
+                    </p>
+                    <!-- Authentication -->
                     <div id="auth" class="rel-link-body"></div>
                     <h3 class="page-header">authentication</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
+                    <h4 class="method-head">&nbsp;authenticate</h4>
+                    <p>
+                        Authentication is stateless and is handled via JSON web tokens. Simply request a token from the
+                        <code>/authenticate</code> endpoint and use the token when making requests to secured endpoints.
+                        Tokens expire 24 hours from the moment they are requested.
+                    </p>
+                    <p>
+                        None of the endpoints are currently secured currently for development purposes, though the
+                        functionality does exist.
+                    </p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">POST http://api.tangr.am/authenticate</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>email</td>
+                                    <td>user's email address</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>user's password</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "User Authenticated!",
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0MTgyODQzMCwiZXhwIjoxNDQxOTE0ODMwfQ.7h1l1FPepFoV_8l4R-DhKnJCX7JImAHRYh8nuv58ksM"
+}</pre>
+                    </p>
+                    <!-- Users -->
                     <div id="users" class="rel-link-body"></div>
                     <h3 class="page-header">users</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
-                    <div id="posts" class="rel-link-body"></div>
-                    <h3 class="page-header">posts</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
+                    <h4 class="method-head">&nbsp;get all users</h4>
+                    <p>Returns all of the users. Does not currently support pagination.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/users</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+[
+    {
+        "_id": "55ebab212f8851540ea0397f",
+        "last_name": "Petersen",
+        "first_name": "Jared",
+        "email": "jpetersen11@wou.edu",
+        "created": "2015-09-06T02:55:29.162Z"
+    },
+    {
+        "_id": "55ebab262f8851540ea03980",
+        "last_name": "Morse",
+        "first_name": "Scot",
+        "email": "morses@wou.edu",
+        "created": "2015-09-06T02:55:34.319Z"
+    },
+    ...
+]</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;get single user</h4>
+                    <p>Returns a single user based on the user ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/users/:userid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "_id": "55ebab212f8851540ea0397f",
+    "last_name": "Petersen",
+    "first_name": "Jared",
+    "email": "jpetersen11@wou.edu",
+    "created": "2015-09-06T02:55:29.162Z"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;register new user</h4>
+                    <p>Register a new user. All passwords are automatically put through
+                       a one-encryption system for security purposes.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">POST http://api.tangr.am/projects</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>email</td>
+                                    <td>email address of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>first_name</td>
+                                    <td>first name of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>last_name</td>
+                                    <td>last name of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>password of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 201: CREATED
+
+{
+    "message": "User Registered!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;update single user</h4>
+                    <p>Update a single user based on the user ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">PUT http://api.tangr.am/users/:userid</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>email</td>
+                                    <td>email address of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>first_name</td>
+                                    <td>first name of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>last_name</td>
+                                    <td>last name of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>password</td>
+                                    <td>password of the user</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "User Updated!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;delete single user</h4>
+                    <p>Delete a single user based on the user ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">DELETE http://api.tangr.am/users/:userid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "User Deleted!"
+}</pre>
+                    </p>
+
+
+                    <!-- Projects -->
+                    <div id="projects" class="rel-link-body"></div>
+                    <h3 class="page-header">projects</h2>
+                    <h4 class="method-head">&nbsp;get all projects</h4>
+                    <p>Returns all of the projects. Does not currently support pagination.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/projects</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+[
+    {
+        "_id": "55ebab432f8851540ea03981",
+        "owner": "55ebab212f8851540ea0397f",
+        "description": "Project 1 Description",
+        "name": "Project 1",
+        "members": ["55ebab212f8851540ea0397f"],
+        "created": "2015-09-06T02:56:03.072Z"
+    },
+    {
+        "_id": "55ebab4a2f8851540ea03982",
+        "owner": "55ebab212f8851540ea0397f",
+        "description": "Project 2 Description",
+        "name": "Project 2",
+        "members": ["55ebab212f8851540ea0397f"],
+        "created": "2015-09-06T02:56:10.014Z"
+    },
+    ...
+]</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;get single project</h4>
+                    <p>Returns a single project based on the project ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/projects/:projectid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "_id": "55ebab432f8851540ea03981",
+    "owner": "55ebab212f8851540ea0397f",
+    "description": "Project 1 Description",
+    "name": "Project 1",
+    "members": ["55ebab212f8851540ea0397f"],
+    "created": "2015-09-06T02:56:03.072Z"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;create new project</h4>
+                    <p>Create a new project with the given user as an owner.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">POST http://api.tangr.am/projects</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the project</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>project's description</td>
+                                    <td>no</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>project's owner as a user ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 201: CREATED
+
+{
+    "message": "Project Created!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;update single project</h4>
+                    <p>Update a single project based on the project ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">PUT http://api.tangr.am/projects/:projectid</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the project</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>project's description</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>project's owner as a user ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Project Updated!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;delete single project</h4>
+                    <p>Delete a single project based on the project ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">DELETE http://api.tangr.am/projects/:projectid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Project Deleted!"
+}</pre>
+                    </p>
+
+
+                    <!-- Tasks -->
                     <div id="tasks" class="rel-link-body"></div>
                     <h3 class="page-header">tasks</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
+                    <h4 class="method-head">&nbsp;get all tasks</h4>
+                    <p>Returns all of the tasks. Does not currently support pagination.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/tasks</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+[
+    {
+        "_id": "55ebab682f8851540ea03983",
+        "project": "55ebab432f8851540ea03981",
+        "owner": null,
+        "description": "Task 1 Description",
+        "name": "Task 1",
+        "created": "2015-09-06T02:56:40.208Z"
+    },
+    {
+        "_id": "55ebab6f2f8851540ea03984",
+        "project": "55ebab432f8851540ea03981",
+        "owner": null,
+        "description": "Task 2 Description",
+        "name": "Task 2",
+        "created": "2015-09-06T02:56:47.116Z"
+    },
+    ...
+]</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;get single task</h4>
+                    <p>Returns a single task based on the task ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/tasks/:taskid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "_id": "55ebab432f8851540ea03981",
+    "owner": "55ebab212f8851540ea0397f",
+    "description": "Project 1 Description",
+    "name": "Project 1",
+    "members": ["55ebab212f8851540ea0397f"],
+    "created": "2015-09-06T02:56:03.072Z"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;create new task</h4>
+                    <p>Create a new task.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">POST http://api.tangr.am/tasks</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the task</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>description of the task</td>
+                                    <td>no</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>tasks's owner as a user ID</td>
+                                    <td>no</td>
+                                </tr>
+                                <tr>
+                                    <td>project</td>
+                                    <td>project the task belongs to as a project ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 201: CREATED
+
+{
+    "message": "Task Created!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;update single task</h4>
+                    <p>Update a single task based on the task ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">PUT http://api.tangr.am/tasks/:taskid</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the task</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>description of the task</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>tasks's owner as a user ID</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>project</td>
+                                    <td>project the task belongs to as a project ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Task Updated!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;delete single task</h4>
+                    <p>Delete a single task based on the task ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">DELETE http://api.tangr.am/tasks/:taskid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Task Deleted!"
+}</pre>
+                    </p>
+
+
+                    <!-- Subtasks -->
                     <div id="subtasks" class="rel-link-body"></div>
                     <h3 class="page-header">subtasks</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien. Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut</p>
+                    <h4 class="method-head">&nbsp;get all subtasks</h4>
+                    <p>Returns all of the subtasks. Does not currently support pagination.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/subtasks</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+[
+    {
+        "_id":"55ebab992f8851540ea03985",
+        "task":"55ebab682f8851540ea03983",
+        "owner":null,
+        "description":"Subtask 1 Description",
+        "name":"Subtask 1",
+        "created":"2015-09-06T02:57:29.400Z"
+    },
+    {
+        "_id":"55ebaba12f8851540ea03986",
+        "task":"55ebab682f8851540ea03983",
+        "owner":null,
+        "description":"Subtask 2 Description",
+        "name":"Subtask 2",
+        "created":"2015-09-06T02:57:37.103Z"
+    },
+    ...
+]</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;get single subtask</h4>
+                    <p>Returns a single subtask based on the subtask ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">GET http://api.tangr.am/subtasks/:subtaskid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "_id":"55ebab992f8851540ea03985",
+    "task":"55ebab682f8851540ea03983",
+    "owner":null,
+    "description":"Subtask 1 Description",
+    "name":"Subtask 1",
+    "created":"2015-09-06T02:57:29.400Z"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;create new subtask</h4>
+                    <p>Create a new subtask.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">POST http://api.tangr.am/subtasks</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the subtask</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>description of the subtask</td>
+                                    <td>no</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>subtask's owner as a user ID</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>task</td>
+                                    <td>task the subtask belongs to as a task ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 201: CREATED
+
+{
+    "message": "Subtask Created!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;update single subtask</h4>
+                    <p>Update a single subtask based on the subtask ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">PUT http://api.tangr.am/subtask/:subtaskid</pre></p>
+                    <h5><strong>query parameters</strong></h5>
+                    <p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>parameter</th>
+                                    <th>description</th>
+                                    <th>required</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>name</td>
+                                    <td>name of the subtask</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>description</td>
+                                    <td>description of the subtask</td>
+                                    <td>no</td>
+                                </tr>
+                                <tr>
+                                    <td>owner</td>
+                                    <td>subtask's owner as a user ID</td>
+                                    <td>yes</td>
+                                </tr>
+                                <tr>
+                                    <td>task</td>
+                                    <td>task the subtask belongs to as a task ID</td>
+                                    <td>yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Subtask Updated!"
+}</pre>
+                    </p>
+                    <br />
+                    <h4 class="method-head">&nbsp;delete single subtask</h4>
+                    <p>Delete a single subtask based on the subtask ID passed into the URL.</p>
+                    <h5 style="margin-top: 20px;"><strong>request</strong></h5>
+                    <p><pre style="margin-bottom: 20px;">DELETE http://api.tangr.am/subtasks/:subtaskid</pre></p>
+                    <h5><strong>response</strong></h5>
+                    <p>
+<pre>
+HTTP 200: OK
+
+{
+    "message": "Subtask Deleted!"
+}</pre>
+                    </p>
                 </div>
             </div>
         </div>
