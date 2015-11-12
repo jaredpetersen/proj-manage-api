@@ -4,7 +4,7 @@ module.exports = function (app) {
 
     // Middleware
     var middleware = require('./controllers/middleware');
-    app.use(middleware.logEverything);
+    app.use(middleware.cors);
 
     // Authenticate
     var authenticate = require('./controllers/authenticate');
