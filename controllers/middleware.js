@@ -9,8 +9,6 @@ exports.cors = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     // Allow any of the supported methods (Options is for the preflight check)
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
-    // Allow the check for the origin policy
-    res.header('Access-Control-Allow-Headers', 'Access-Control-Allow-Origin');
 
     // If it's a preflight check, let the user know that they are good to go
     if (req.method == 'OPTIONS') {
