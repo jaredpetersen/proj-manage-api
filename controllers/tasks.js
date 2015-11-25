@@ -21,6 +21,7 @@ exports.findById = function(req, res, next) {
     });
 };
 
+// Get all tasks for a user
 exports.findByUserId = function(req, res, next) {
     Task.find({owner: req.params.id}, '-__v', function(err, tasks) {
         if (err) return next(err);

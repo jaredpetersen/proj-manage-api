@@ -21,6 +21,14 @@ exports.findById = function(req, res, next) {
     });
 };
 
+// Get all projects for a user
+exports.findByUserId = function(req, res, next) {
+    Project.find({owner: req.params.id}, '-__v', function(err, projects) {
+        if (err) return next(err);
+        res.json(projects);
+    });
+};
+
 // Add a new project
 exports.add = function(req, res, next) {
     var newProject = new Project();

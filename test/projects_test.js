@@ -93,6 +93,8 @@ describe('Projects', function(){
         });
     });
 
+    it('Gets projects by user');
+
     it('Creates a new project');
 
     it('Updates a project');
