@@ -39,7 +39,7 @@ exports.update = function(req, res, next) {
     Subtask.findById(req.params.id, function(err, subtask) {
         if (err) return next(err);
         // Return 404 for a nonexistant subtask
-        if (user == null) return next(errors.newError(404));
+        if (subtask == null) return next(errors.newError(404));
         subtask.name = req.body.name;
         subtask.description = req.body.description;
         subtask.owner = req.body.owner;
