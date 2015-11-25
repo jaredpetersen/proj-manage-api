@@ -8,6 +8,7 @@ describe('Projects', function(){
     it('Lists all projects', function(done){
         api.get('/projects')
         .set('Accept', 'application/json')
+        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0ODQxOTQ4MSwiZXhwIjoxNDQ4NTA1ODgxfQ.sRH3sRjqgSZpAuSvwg5e_C6btKsT6SxDjtb49D34sls')
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -92,8 +93,6 @@ describe('Projects', function(){
             done();
         });
     });
-
-    it('Gets projects by user');
 
     it('Creates a new project');
 

@@ -12,18 +12,16 @@ module.exports = function (app) {
 
     // Projects
     var projects = require('./controllers/projects');
-    app.get('/projects', projects.findAll);
+    app.get('/projects', authenticate.verify, projects.findAll);
     app.get('/projects/:id', projects.findById);
-    app.get('/projects/users/:id', projects.findByUserId);
     app.post('/projects', projects.add);
     app.put('/projects/:id', projects.update);
     app.delete('/projects/:id', projects.delete);
 
     // Tasks
     var tasks = require('./controllers/tasks');
-    app.get('/tasks', tasks.findAll);
+    app.get('/tasks', authenticate.verify, tasks.findAll);
     app.get('/tasks/:id', tasks.findById);
-    app.get('/tasks/users/:id', tasks.findByUserId);
     app.post('/tasks', tasks.add);
     app.put('/tasks/:id', tasks.update);
     app.delete('/tasks/:id', tasks.delete);

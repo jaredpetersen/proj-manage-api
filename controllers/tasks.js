@@ -5,7 +5,7 @@ var errors = require('./errors.js');
 
 // Get all tasks
 exports.findAll = function(req, res, next) {
-    Task.find(null, '-__v', function(err, tasks) {
+    Task.find({owner: req.body.token}, '-__v', function(err, tasks) {
         if (err) return next(err);
         res.json(tasks);
     });
@@ -18,14 +18,6 @@ exports.findById = function(req, res, next) {
         // Return 404 for a nonexistant task
         if (task == null) return next(errors.newError(404));
         res.json(task);
-    });
-};
-
-// Get all tasks for a user
-exports.findByUserId = function(req, res, next) {
-    Task.find({owner: req.params.id}, '-__v', function(err, tasks) {
-        if (err) return next(err);
-        res.json(tasks);
     });
 };
 

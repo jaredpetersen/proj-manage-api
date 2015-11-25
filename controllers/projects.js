@@ -5,7 +5,7 @@ var errors = require('./errors.js');
 
 // Get all projects
 exports.findAll = function(req, res, next) {
-    Project.find(null, '-__v', function(err, projects) {
+    Project.find({owner: req.decoded.id}, '-__v', function(err, projects) {
         if (err) return next(err);
         res.json(projects);
     });
@@ -18,14 +18,6 @@ exports.findById = function(req, res, next) {
         // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));
         res.json(project);
-    });
-};
-
-// Get all projects for a user
-exports.findByUserId = function(req, res, next) {
-    Project.find({owner: req.params.id}, '-__v', function(err, projects) {
-        if (err) return next(err);
-        res.json(projects);
     });
 };
 

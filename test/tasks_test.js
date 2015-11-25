@@ -8,6 +8,7 @@ describe('Tasks', function(){
     it('Lists all tasks', function(done){
         api.get('/tasks')
         .set('Accept', 'application/json')
+        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0ODQxOTQ4MSwiZXhwIjoxNDQ4NTA1ODgxfQ.sRH3sRjqgSZpAuSvwg5e_C6btKsT6SxDjtb49D34sls')
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -88,8 +89,6 @@ describe('Tasks', function(){
             done();
         });
     });
-
-    it('Gets tasks by user');
 
     it('Creates a new task');
 
