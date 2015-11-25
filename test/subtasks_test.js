@@ -30,8 +30,6 @@ describe('Subtasks', function(){
                 expect(res.body[0]).to.have.property('created');
                 expect(res.body[0].created).to.not.equal(null);
                 expect(res.body[0].created).to.be.a('String');
-                // Owner
-                expect(res.body[0]).to.have.property('owner');
                 // Task
                 expect(res.body[0]).to.have.property('task');
                 expect(res.body[0].task).to.not.equal(null);
@@ -63,8 +61,6 @@ describe('Subtasks', function(){
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
             expect(res.body.created).to.be.a('String');
-            // Owner
-            expect(res.body).to.have.property('owner');
             // Task
             expect(res.body).to.have.property('task');
             expect(res.body.task).to.not.equal(null);
