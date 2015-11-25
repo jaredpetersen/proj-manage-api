@@ -22,6 +22,7 @@ module.exports = function (app) {
     var tasks = require('./controllers/tasks');
     app.get('/tasks', tasks.findAll);
     app.get('/tasks/:id', tasks.findById);
+    app.get('/tasks/users/:id', tasks.findByUserId);
     app.post('/tasks', tasks.add);
     app.put('/tasks/:id', tasks.update);
     app.delete('/tasks/:id', tasks.delete);

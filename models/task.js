@@ -10,7 +10,8 @@ var taskSchema = new mongoose.Schema({
     description: {type: String},
     created: {type: Date, default: Date.now},
     owner: {type : Schema.Types.ObjectId, ref: 'User'},
-    project: {type : Schema.Types.ObjectId, ref: 'Project', required: true},
+    status: {type: String, lowercase: true, default: 'backlog'},
+    project: {type : Schema.Types.ObjectId, ref: 'Project', required: true}
 });
 
 // Provides our cascading delete functionality

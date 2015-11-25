@@ -89,6 +89,8 @@ describe('Tasks', function(){
         });
     });
 
+    it('Gets tasks by user');
+
     it('Creates a new task');
 
     it('Updates a task');

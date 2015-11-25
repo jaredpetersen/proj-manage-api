@@ -21,6 +21,13 @@ exports.findById = function(req, res, next) {
     });
 };
 
+exports.findByUserId = function(req, res, next) {
+    Task.find({owner: req.params.id}, '-__v', function(err, tasks) {
+        if (err) return next(err);
+        res.json(tasks);
+    });
+};
+
 // Add a new task
 exports.add = function(req, res, next) {
     var newTask = new Task();
@@ -39,7 +46,7 @@ exports.update = function(req, res, next) {
     Task.findById(req.params.id, function(err, task) {
         if (err) return next(err);
         // Return 404 for a nonexistant task
-        if (user == null) return next(errors.newError(404));
+        if (task == null) return next(errors.newError(404));
         task.name = req.body.name;
         task.description = req.body.description;
         task.owner = req.body.owner;
