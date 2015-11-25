@@ -7,7 +7,7 @@ exports.cors = function(req, res, next) {
 
     // Allow anyone to get data regardless of domain
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token');
     // Allow any of the supported methods (Options is for the preflight check)
     res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
 
