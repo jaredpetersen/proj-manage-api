@@ -5,7 +5,7 @@ var errors = require('./errors.js');
 
 // Get all tasks
 exports.findAll = function(req, res, next) {
-    Task.find({owner: req.body.token}, '-__v', function(err, tasks) {
+    Task.find({owner: req.decoded.id}, '-__v', function(err, tasks) {
         if (err) return next(err);
         res.json(tasks);
     });
