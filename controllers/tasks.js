@@ -1,14 +1,36 @@
 'use strict';
 
 var Task = require('../models/task.js');
+var Project = require('../models/project.js');
 var errors = require('./errors.js');
 
-// Get all tasks
+// Get all tasks for the user
 exports.findAll = function(req, res, next) {
     Task.find({owner: req.decoded.id}, '-__v', function(err, tasks) {
         if (err) return next(err);
         res.json(tasks);
     });
+};
+
+// Get all tasks for the user
+exports.findProjectTasks = function(req, res, next) {
+    Project.findById(req.params.id, '-__v', function(err, project) {
+        if (err) return next(err);
+        if (project.members.indexOf(req.decoded.id) != -1) {
+            // User is a member of the project, let them have the data
+            Task.find({project: req.params.id}, '-__v', function(err, tasks) {
+                if (err) return next(err);
+                res.json(tasks);
+            });
+        }
+        else {
+            // User is not a member of the project and does not have the right
+            // to the data, tell them so.
+            var err = new Error();
+            err.status = 403;
+            return next(err);
+        }
+    })
 };
 
 // Get a specific task

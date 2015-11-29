@@ -19,6 +19,9 @@ exports.errorHandler = function(err, req, res, next) {
     else if (err.status == 401) {
         res.status(401).json({"message": "Unauthorized"});
     }
+    else if (err.status == 403) {
+        res.status(403).json({"message": "Forbidden"});
+    }
     else {
         res.status(500).json({"message": "Internal Server Error"});
     }

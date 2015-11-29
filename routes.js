@@ -21,6 +21,7 @@ module.exports = function (app) {
     // Tasks
     var tasks = require('./controllers/tasks');
     app.get('/tasks', authenticate.verify, tasks.findAll);
+    app.get('/projects/:id/tasks/', authenticate.verify, tasks.findProjectTasks);
     app.get('/tasks/:id', tasks.findById);
     app.post('/tasks', tasks.add);
     app.put('/tasks/:id', tasks.update);
