@@ -48,6 +48,7 @@ describe('Projects', function(){
     it('Gets a single project', function(done){
         api.get('/projects/55ebab432f8851540ea03981')
         .set('Accept', 'application/json')
+        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTEyNDk4OCwiZXhwIjoxNDQ5MjExMzg4fQ.L83gMGpfIwuZLtPeR1SXvP_MaM_ukY7hC-fNjOIMZSs')
         .expect(200)
         .end(function(err, res) {
             // Overall
