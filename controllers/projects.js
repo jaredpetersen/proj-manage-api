@@ -13,7 +13,7 @@ exports.findAll = function(req, res, next) {
 
 // Get a specific project
 exports.findById = function(req, res, next) {
-    Project.findById(req.params.id, '-__v', function(err, project) {
+    Project.find({_id: req.params.id, members: {$in: [req.decoded.id]} }, '-__v', function(err, project) {
         if (err) return next(err);
         // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));

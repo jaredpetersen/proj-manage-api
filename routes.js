@@ -13,7 +13,7 @@ module.exports = function (app) {
     // Projects
     var projects = require('./controllers/projects');
     app.get('/projects', authenticate.verify, projects.findAll);
-    app.get('/projects/:id', projects.findById);
+    app.get('/projects/:id', authenticate.verify, projects.findById);
     app.post('/projects', authenticate.verify, projects.add);
     app.put('/projects/:id', projects.update);
     app.delete('/projects/:id', projects.delete);
