@@ -26,8 +26,8 @@ exports.add = function(req, res, next) {
     var newProject = new Project();
     newProject.name = req.body.name;
     newProject.description = req.body.description || null;
-    newProject.owner = req.body.owner;
-    newProject.members = req.body.owner;
+    newProject.owner = req.decoded.id;
+    newProject.members = req.decoded.id;
     newProject.save(function(err, newUser) {
         if (err) return next(err);
         res.status(201).json({"message": "Project Created!"});
