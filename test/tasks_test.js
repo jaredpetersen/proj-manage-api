@@ -8,7 +8,7 @@ describe('Tasks', function(){
     it('Lists all tasks', function(done){
         api.get('/tasks')
         .set('Accept', 'application/json')
-        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTEyNDk4OCwiZXhwIjoxNDQ5MjExMzg4fQ.L83gMGpfIwuZLtPeR1SXvP_MaM_ukY7hC-fNjOIMZSs')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall

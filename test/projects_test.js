@@ -8,7 +8,7 @@ describe('Projects', function(){
     it('Lists all projects', function(done){
         api.get('/projects')
         .set('Accept', 'application/json')
-        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTEyNDk4OCwiZXhwIjoxNDQ5MjExMzg4fQ.L83gMGpfIwuZLtPeR1SXvP_MaM_ukY7hC-fNjOIMZSs')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -48,7 +48,7 @@ describe('Projects', function(){
     it('Gets a single project', function(done){
         api.get('/projects/55ebab432f8851540ea03981')
         .set('Accept', 'application/json')
-        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTEyNDk4OCwiZXhwIjoxNDQ5MjExMzg4fQ.L83gMGpfIwuZLtPeR1SXvP_MaM_ukY7hC-fNjOIMZSs')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -82,7 +82,7 @@ describe('Projects', function(){
     it('Gets a single (nonexistent) project', function(done){
         api.get('/projects/0')
         .set('Accept', 'application/json')
-        .set('x-access-token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTEyNDk4OCwiZXhwIjoxNDQ5MjExMzg4fQ.L83gMGpfIwuZLtPeR1SXvP_MaM_ukY7hC-fNjOIMZSs')
+        .set('x-access-token', config.token)
         .expect(404)
         .end(function(err, res) {
             // Overall
