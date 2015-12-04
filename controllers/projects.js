@@ -56,7 +56,7 @@ exports.delete = function(req, res, next) {
     // the middleware; Have to remove a specific document
     Project.findById(req.params.id, function(err, project) {
         if (err) return next(err);
-        // Return 404 for a nonexistant user
+        // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));
         project.remove(function(err, project) {
             if (err) return next(err);

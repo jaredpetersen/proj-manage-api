@@ -85,10 +85,15 @@ exports.update = function(req, res, next) {
 
 // Delete a specific task
 exports.delete = function(req, res, next) {
-    Task.findByIdAndRemove({_id: req.params.id}, function(err, task) {
+    // Can't use findByIdAndRemove() or Model.remove() in order to invoke
+    // the middleware; Have to remove a specific document
+    Task.findById(req.params.id, function(err, task) {
         if (err) return next(err);
         // Return 404 for a nonexistant task
         if (task == null) return next(errors.newError(404));
-        res.json({"message": "Task Deleted!"});
+        task.remove(function(err, task) {
+            if (err) return next(err);
+            res.json({"message": "Task Deleted!"});
+        });
     });
 };

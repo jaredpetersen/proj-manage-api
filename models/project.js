@@ -3,7 +3,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Task = require('./task.js');
-var Subtask = require('./subtask.js');
 var idValidator = require('mongoose-id-validator');
 
 var projectSchema = new mongoose.Schema({
@@ -16,8 +15,9 @@ var projectSchema = new mongoose.Schema({
 
 // Provides our cascading delete functionality
 projectSchema.pre('remove', function(next) {
-    Task.remove({owner: this._id}).exec();
-    Subtask.remove({owner: this._id}).exec();
+    Task.remove({project: this._id}, function(err, removed) {
+        next();
+    });
 });
 
 projectSchema.plugin(idValidator);

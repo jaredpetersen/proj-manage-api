@@ -16,7 +16,9 @@ var taskSchema = new mongoose.Schema({
 
 // Provides our cascading delete functionality
 taskSchema.pre('remove', function(next) {
-    Subtask.remove({task: this._id}).exec();
+    Subtask.remove({task: this._id}, function(err, removed) {
+        next();
+    });
 });
 
 taskSchema.plugin(idValidator);
