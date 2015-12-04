@@ -26,11 +26,9 @@ exports.findProjectTasks = function(req, res, next) {
         else {
             // User is not a member of the project and does not have the right
             // to the data, tell them so.
-            var err = new Error();
-            err.status = 403;
-            return next(err);
+            return next(errors.newError(403));
         }
-    })
+    });
 };
 
 // Get a specific task
@@ -45,14 +43,26 @@ exports.findById = function(req, res, next) {
 
 // Add a new task
 exports.add = function(req, res, next) {
-    var newTask = new Task();
-    newTask.name = req.body.name;
-    newTask.description = req.body.description || null;
-    newTask.owner = req.body.owner || null;
-    newTask.project = req.body.project;
-    newTask.save(function(err, newTask) {
+    Project.findById(req.body.project, '-__v', function(err, project) {
         if (err) return next(err);
-        res.status(201).json({"message": "Task Created!"});
+        // Return 404 for a nonexistant project
+        if (project == null) return next(errors.newError(404));
+        // Otherwise, create the task if the user is a member of the project
+        if (project.members == req.decoded.id) {
+            var newTask = new Task();
+            newTask.name = req.body.name;
+            newTask.description = req.body.description || null;
+            newTask.owner = req.body.owner || null;
+            newTask.project = req.body.project;
+            newTask.save(function(err, newTask) {
+                if (err) return next(err);
+                res.status(201).json({"message": "Task Created!"});
+            });
+        }
+        else {
+            // The user is not a member, tell them they can't add a task
+            return next(errors.newError(403));
+        }
     });
 };
 
