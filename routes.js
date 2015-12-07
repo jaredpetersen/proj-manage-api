@@ -24,7 +24,7 @@ module.exports = function (app) {
     app.get('/projects/:id/tasks/', authenticate.verify, tasks.findProjectTasks);
     app.get('/tasks/:id', tasks.findById);
     app.post('/tasks', authenticate.verify, tasks.add);
-    app.put('/tasks/:id', tasks.update);
+    app.put('/tasks/:id', authenticate.verify, tasks.update);
     app.delete('/tasks/:id', tasks.delete);
 
     // Subasks
