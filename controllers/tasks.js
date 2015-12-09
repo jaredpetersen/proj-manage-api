@@ -131,9 +131,26 @@ exports.delete = function(req, res, next) {
         if (err) return next(err);
         // Return 404 for a nonexistant task
         if (task == null) return next(errors.newError(404));
-        task.remove(function(err, task) {
+
+        // Make sure the user has permission to delete the task
+        Project.findById(task.project, '-__v', function(err, project) {
             if (err) return next(err);
-            res.json({"message": "Task Deleted!"});
+            // Return 404 for a nonexistent project
+            if (project == null) return next(errors.newError(404));
+
+            // Check for permissions
+            if (project.members.indexOf(req.decoded.id) !== -1) {
+                // Remove the task
+                task.remove(function(err, task) {
+                    if (err) return next(err);
+                    res.json({"message": "Task Deleted!"});
+                });
+            }
+            else {
+                // User is not a member of the task's project, they cannot
+                // update the task
+                return next(errors.newError(403));
+            }
         });
     });
 };

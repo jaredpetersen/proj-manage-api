@@ -25,7 +25,7 @@ module.exports = function (app) {
     app.get('/tasks/:id', tasks.findById);
     app.post('/tasks', authenticate.verify, tasks.add);
     app.put('/tasks/:id', authenticate.verify, tasks.update);
-    app.delete('/tasks/:id', tasks.delete);
+    app.delete('/tasks/:id', authenticate.verify, tasks.delete);
 
     // Subasks
     var subtasks = require('./controllers/subtasks');
