@@ -1,23 +1,49 @@
 'use strict';
 
 var Subtask = require('../models/subtask.js');
+var Project = require('../models/project.js');
 var errors = require('./errors.js');
 
-// Get all subtasks
+// Get all subtasks for a task
 exports.findAll = function(req, res, next) {
-    Subtask.find(null, '-__v', function(err, subtasks) {
+    // Verify that the user has access to the project information
+    Project.findById(req.params.pid, '-__v', function(err, project) {
         if (err) return next(err);
-        res.json(subtasks);
+        if (project.members.indexOf(req.decoded.id) != -1) {
+            // User is a member of the project, let them have the data
+            Subtask.find({task: req.params.tid}, '-__v', function(err, subtasks) {
+                if (err) return next(err);
+                res.json(subtasks);
+            });
+        }
+        else {
+            // User is not a member of the project and does not have the right
+            // to the data, tell them so.
+            return next(errors.newError(403));
+        }
     });
 };
 
 // Get a specific subtask
 exports.findById = function(req, res, next) {
-    Subtask.findById(req.params.id, '-__v', function(err, subtask) {
+    // Verify that the user has access to the project information
+    Project.findById(req.params.pid, '-__v', function(err, project) {
         if (err) return next(err);
-        // Return 404 for a nonexistant subtask
-        if (subtask == null) return next(errors.newError(404));
-        res.json(subtask);
+        if (project.members.indexOf(req.decoded.id) != -1) {
+            console.log()
+            // User is a member of the project, let them have the data
+            Subtask.findOne({task: req.params.tid}, '-__v', function(err, subtask) {
+                if (err) return next(err);
+                // Return 404 for a nonexistant subtask
+                //if (subtask == null) return next(errors.newError(404));
+                res.json(subtask);
+            });
+        }
+        else {
+            // User is not a member of the project and does not have the right
+            // to the data, tell them so.
+            return next(errors.newError(403));
+        }
     });
 };
 

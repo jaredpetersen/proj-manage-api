@@ -6,7 +6,7 @@ var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Subtasks', function(){
     it('Lists all subtasks', function(done){
-        api.get('/subtasks')
+        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/568659d2820d5aed0b52e7a3/subtasks')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
@@ -24,8 +24,6 @@ describe('Subtasks', function(){
                 expect(res.body[0]).to.have.property('name');
                 expect(res.body[0].name).to.not.equal(null);
                 expect(res.body[0].name).to.be.a('String');
-                // Description
-                expect(res.body[0]).to.have.property('description');
                 // Created
                 expect(res.body[0]).to.have.property('created');
                 expect(res.body[0].created).to.not.equal(null);

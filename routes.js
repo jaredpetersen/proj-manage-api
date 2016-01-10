@@ -15,25 +15,25 @@ module.exports = function (app) {
     app.get('/projects', authenticate.verify, projects.findAll);
     app.get('/projects/:id', authenticate.verify, projects.findById);
     app.post('/projects', authenticate.verify, projects.add);
-    app.put('/projects/:id', projects.update);
-    app.delete('/projects/:id', projects.delete);
+    app.put('/projects/:id', projects.update); // Need to lock down
+    app.delete('/projects/:id', projects.delete); // Need to lock down
 
     // Tasks
     var tasks = require('./controllers/tasks');
     app.get('/tasks', authenticate.verify, tasks.findAll);
     app.get('/projects/:id/tasks/', authenticate.verify, tasks.findProjectTasks);
-    app.get('/tasks/:id', tasks.findById);
+    app.get('/tasks/:id', tasks.findById); // Need to lock down
     app.post('/tasks', authenticate.verify, tasks.add);
     app.put('/tasks/:id', authenticate.verify, tasks.update);
     app.delete('/tasks/:id', authenticate.verify, tasks.delete);
 
     // Subasks
     var subtasks = require('./controllers/subtasks');
-    app.get('/subtasks', subtasks.findAll);
-    app.get('/subtasks/:id', subtasks.findById);
-    app.post('/subtasks', subtasks.add);
-    app.put('/subtasks/:id', subtasks.update);
-    app.delete('/subtasks/:id', subtasks.delete);
+    app.get('/projects/:pid/tasks/:tid/subtasks', authenticate.verify, subtasks.findAll);
+    app.get('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.findById);
+    app.post('/subtasks', subtasks.add); // Need to lock down
+    app.put('/subtasks/:id', subtasks.update); // Need to lock down
+    app.delete('/subtasks/:id', subtasks.delete); // Need to lock down
 
     // Users
     var users = require('./controllers/users');

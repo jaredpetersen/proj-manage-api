@@ -3,5 +3,5 @@ module.exports = {
     'apiPort': 8138,
     'tokenSecret': 'supersecret',
     'tokenExpiration': 1440,
-    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ0OTQ3ODIzNSwiZXhwIjoxNDQ5NTY0NjM1fQ.iScAuUGGtzQ0lAwLeBYNT7gRGHuaU0L0ls-0WvVYHSM'
+    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ1MjM4NzcxNywiZXhwIjoxNDUyNDc0MTE3fQ.z2pcB-xBP6dQ9LiWZppIgRY3src8C6n1uFGHpNUvbZA'
 };
