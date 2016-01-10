@@ -31,9 +31,9 @@ module.exports = function (app) {
     var subtasks = require('./controllers/subtasks');
     app.get('/projects/:pid/tasks/:tid/subtasks', authenticate.verify, subtasks.findAll);
     app.get('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.findById);
-    app.post('/subtasks', subtasks.add); // Need to lock down
-    app.put('/subtasks/:id', subtasks.update); // Need to lock down
-    app.delete('/subtasks/:id', subtasks.delete); // Need to lock down
+    app.post('/projects/:pid/tasks/:tid/subtasks/', authenticate.verify, subtasks.add);
+    app.put('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.update);
+    app.delete('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.delete);
 
     // Users
     var users = require('./controllers/users');

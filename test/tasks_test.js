@@ -44,7 +44,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/tasks/55ebab682f8851540ea03983')
+        api.get('/tasks/56865b48820d5aed0b52e7ac')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

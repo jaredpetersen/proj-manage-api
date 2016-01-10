@@ -8,6 +8,7 @@ describe('Subtasks', function(){
     it('Lists all subtasks', function(done){
         api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/568659d2820d5aed0b52e7a3/subtasks')
         .set('Accept', 'application/json')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -24,6 +25,9 @@ describe('Subtasks', function(){
                 expect(res.body[0]).to.have.property('name');
                 expect(res.body[0].name).to.not.equal(null);
                 expect(res.body[0].name).to.be.a('String');
+                // Due
+                expect(res.body[0]).to.have.property('created');
+                expect(res.body[0].created).to.be.a('String');
                 // Created
                 expect(res.body[0]).to.have.property('created');
                 expect(res.body[0].created).to.not.equal(null);
@@ -39,8 +43,9 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/subtasks/55ebab992f8851540ea03985')
+        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/568659d2820d5aed0b52e7a3/subtasks/569215cb2f0a470f52d1055a')
         .set('Accept', 'application/json')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -53,8 +58,9 @@ describe('Subtasks', function(){
             expect(res.body).to.have.property('name');
             expect(res.body.name).to.not.equal(null);
             expect(res.body.name).to.be.a('String');
-            // Description
-            expect(res.body).to.have.property('description');
+            // Due
+            expect(res.body).to.have.property('created');
+            expect(res.body.created).to.be.a('String');
             // Created
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
