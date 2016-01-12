@@ -6,6 +6,7 @@ var idValidator = require('mongoose-id-validator');
 
 var subtaskSchema = new mongoose.Schema({
     name: {type: String, required: true},
+    status: {type: String, lowercase: true, default: 'incomplete'},
     created: {type: Date, default: Date.now},
     due: {type: Date},
     task: {type: Schema.Types.ObjectId, ref: 'Task', required: true}

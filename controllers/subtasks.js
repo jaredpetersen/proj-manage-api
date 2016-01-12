@@ -81,6 +81,18 @@ exports.update = function(req, res, next) {
                 if (subtask == null) return next(errors.newError(404));
                 subtask.name = req.body.name || subtask.name;
                 subtask.task = req.params.tid || subtask.task;
+                // Assign subtask status as long as the status fits one of the
+                // accepted statuses
+                if (req.body.status == 'incomplete' ||
+                    req.body.status == 'complete' ||
+                    req.body.status == null) {
+                    subtask.status = req.body.status || subtask.status;
+                }
+                else {
+                    // Not an accepted status, let the user know they sent a
+                    // bad request
+                    return next(errors.newError(400));
+                }
                 // If the due field is not included, do not update
                 if (req.body.due !== undefined) {
                     subtask.due = req.body.due;

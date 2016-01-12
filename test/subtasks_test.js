@@ -43,7 +43,7 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/568659d2820d5aed0b52e7a3/subtasks/569215cb2f0a470f52d1055a')
+        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/568659d2820d5aed0b52e7a3/subtasks/569362a26a8356f3347e5dd0')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
