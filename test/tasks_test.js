@@ -27,6 +27,11 @@ describe('Tasks', function(){
                 expect(res.body[0].name).to.be.a('String');
                 // Description
                 expect(res.body[0]).to.have.property('description');
+                // Due
+                expect(res.body[0]).to.have.property('due');
+                if (res.body[0].due !== null) {
+                    expect(res.body[0].due).to.be.a('String');
+                }
                 // Created
                 expect(res.body[0]).to.have.property('created');
                 expect(res.body[0].created).to.not.equal(null);
@@ -44,7 +49,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/tasks/56865b48820d5aed0b52e7ac')
+        api.get('/tasks/56865afc820d5aed0b52e7ab')
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {

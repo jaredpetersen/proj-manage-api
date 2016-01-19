@@ -9,6 +9,7 @@ var taskSchema = new mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String},
     created: {type: Date, default: Date.now},
+    due: {type: Date},
     owner: {type : Schema.Types.ObjectId, ref: 'User'},
     status: {type: String, lowercase: true, default: 'backlog'},
     project: {type : Schema.Types.ObjectId, ref: 'Project', required: true}

@@ -52,6 +52,7 @@ exports.add = function(req, res, next) {
             var newTask = new Task();
             newTask.name = req.body.name;
             newTask.description = req.body.description || null;
+            newSubtask.due = req.body.due || null;
             newTask.owner = req.body.owner || null;
             newTask.project = req.body.project;
             newTask.save(function(err, newTask) {
@@ -88,6 +89,9 @@ exports.update = function(req, res, next) {
                 }
                 if (req.body.description !== undefined) {
                     task.description = req.body.description;
+                }
+                if (req.body.due !== undefined) {
+                    task.due = req.body.due;
                 }
                 if (req.body.owner !== undefined) {
                     task.owner = req.body.owner;
