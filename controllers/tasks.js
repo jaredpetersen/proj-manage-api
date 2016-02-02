@@ -52,7 +52,7 @@ exports.add = function(req, res, next) {
             var newTask = new Task();
             newTask.name = req.body.name;
             newTask.description = req.body.description || null;
-            newSubtask.due = req.body.due || null;
+            newTask.due = req.body.due || null;
             newTask.owner = req.body.owner || null;
             newTask.project = req.body.project;
             newTask.save(function(err, newTask) {
