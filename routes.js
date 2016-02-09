@@ -23,7 +23,7 @@ module.exports = function (app) {
     app.get('/tasks', authenticate.verify, tasks.findAll);
     app.get('/projects/:id/tasks/', authenticate.verify, tasks.findProjectTasks);
     app.get('/projects/:pid/tasks/:tid', authenticate.verify, tasks.findById);
-    app.post('/tasks', authenticate.verify, tasks.add);
+    app.post('/projects/:pid/tasks', authenticate.verify, tasks.add);
     app.put('/tasks/:id', authenticate.verify, tasks.update);
     app.delete('/tasks/:id', authenticate.verify, tasks.delete);
 

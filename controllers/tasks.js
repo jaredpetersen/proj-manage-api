@@ -55,7 +55,7 @@ exports.findById = function(req, res, next) {
 
 // Add a new task
 exports.add = function(req, res, next) {
-    Project.findById(req.body.project, '-__v', function(err, project) {
+    Project.findById(req.params.pid, '-__v', function(err, project) {
         if (err) return next(err);
         // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));
@@ -66,7 +66,7 @@ exports.add = function(req, res, next) {
             newTask.description = req.body.description || null;
             newTask.due = req.body.due || null;
             newTask.owner = req.body.owner || null;
-            newTask.project = req.body.project;
+            newTask.project = req.params.pid;
             newTask.save(function(err, newTask) {
                 if (err) return next(err);
                 res.status(201).json({"message": "Task Created!"});
