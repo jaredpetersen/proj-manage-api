@@ -118,10 +118,6 @@ exports.update = function(req, res, next) {
                     task.owner = req.body.owner;
                 }
 
-                if (req.body.project !== undefined) {
-                    task.project = req.body.project;
-                }
-
                 if (req.body.status !== undefined) {
                     var status = req.body.status.toLowerCase();
 
