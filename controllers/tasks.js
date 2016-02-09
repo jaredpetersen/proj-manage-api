@@ -24,7 +24,7 @@ exports.findProjectTasks = function(req, res, next) {
             });
         }
         else {
-            // User is not a member of the project and does not have the right
+            // User is not a member of the project and does not have a right
             // to the data, tell them so.
             return next(errors.newError(403));
         }
@@ -33,12 +33,24 @@ exports.findProjectTasks = function(req, res, next) {
 
 // Get a specific task
 exports.findById = function(req, res, next) {
-    Task.findById(req.params.id, '-__v', function(err, task) {
+    Project.findById(req.params.pid, '-__v', function(err, project) {
         if (err) return next(err);
-        // Return 404 for a nonexistant task
-        if (task == null) return next(errors.newError(404));
-        res.json(task);
+        if (project.members.indexOf(req.decoded.id) != -1) {
+            // User is a member of the project, let them have the data
+            Task.findById(req.params.tid, '-__v', function(err, task) {
+                if (err) return next(err);
+                // Return 404 for a nonexistant task
+                if (task == null) return next(errors.newError(404));
+                res.json(task);
+            });
+        }
+        else {
+            // User is not a member of the project and does not have a right
+            // to the data, tell them so.
+            return next(errors.newError(403));
+        }
     });
+
 };
 
 // Add a new task

@@ -5,7 +5,7 @@ var config = require('../config');
 var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Tasks', function(){
-    it('Lists all tasks', function(done){
+    it('Lists all tasks for a user', function(done){
         api.get('/tasks')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
@@ -49,8 +49,9 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/tasks/56865afc820d5aed0b52e7ab')
+        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56865ac6820d5aed0b52e7aa')
         .set('Accept', 'application/json')
+        .set('x-access-token', config.token)
         .expect(200)
         .end(function(err, res) {
             // Overall
@@ -82,6 +83,7 @@ describe('Tasks', function(){
     it('Gets a single (nonexistent) task', function(done){
         api.get('/tasks/0')
         .set('Accept', 'application/json')
+        .set('x-access-token', config.token)
         .expect(404)
         .end(function(err, res) {
             // Overall
