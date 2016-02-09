@@ -20,8 +20,8 @@ module.exports = function (app) {
 
     // Tasks
     var tasks = require('./controllers/tasks');
-    app.get('/tasks', authenticate.verify, tasks.findAll);
-    app.get('/projects/:id/tasks/', authenticate.verify, tasks.findProjectTasks);
+    app.get('/projects/all/tasks', authenticate.verify, tasks.findAll);
+    app.get('/projects/:id/tasks', authenticate.verify, tasks.findProjectTasks);
     app.get('/projects/:pid/tasks/:tid', authenticate.verify, tasks.findById);
     app.post('/projects/:pid/tasks', authenticate.verify, tasks.add);
     app.put('/projects/:pid/tasks/:tid', authenticate.verify, tasks.update);

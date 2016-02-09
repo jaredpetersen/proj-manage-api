@@ -6,7 +6,7 @@ var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Tasks', function(){
     it('Lists all tasks for a user', function(done){
-        api.get('/tasks')
+        api.get('/projects/all/tasks')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
