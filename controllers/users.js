@@ -39,13 +39,23 @@ exports.add = function(req, res, next) {
 
 // Update a specific user (no password)
 exports.update = function(req, res, next) {
-    User.findById(req.params.id, function(err, user) {
+    User.findById(req.decoded.id, function(err, user) {
         if (err) return next(err);
         // Return 404 for a nonexistant user
         if (user == null) return next(errors.newError(404));
-        user.email = req.body.email;
-        user.first_name = req.body.first_name;
-        user.last_name = req.body.last_name;
+
+        if (req.body.email !== undefined) {
+            user.email = req.body.email;
+        }
+
+        if (req.body.first_name !== undefined) {
+            user.first_name = req.body.first_name;
+        }
+
+        if (req.body.last_name !== undefined) {
+            user.last_name = req.body.last_name;
+        }
+
         user.save(function(err, user) {
             if (err) return next(err);
             res.json({"message": "User Updated!"});

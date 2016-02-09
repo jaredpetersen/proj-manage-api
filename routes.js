@@ -37,11 +37,11 @@ module.exports = function (app) {
 
     // Users
     var users = require('./controllers/users');
-    app.get('/users', users.findAll);
+    app.get('/users', users.findAll); // Need to remove once in production
     app.get('/users/:id', users.findById);
     app.post('/users', users.add);
-    app.put('/users/:id', users.update);
-    app.delete('/users/:id', users.delete);
+    app.put('/users', authenticate.verify, users.update); // Lock down
+    app.delete('/users/:id', users.delete); // Lock down
 
     // Error Handling
     var errors = require('./controllers/errors');
