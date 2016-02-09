@@ -75,7 +75,7 @@ exports.update = function(req, res, next) {
 exports.delete = function(req, res, next) {
     // Can't use findByIdAndRemove() or Model.remove() in order to invoke
     // the middleware; Have to remove a specific document
-    User.findById(req.params.id, function(err, user) {
+    User.findById(req.decoded.id, function(err, user) {
         if (err) return next(err);
         // Return 404 for a nonexistant user
         if (user == null) return next(errors.newError(404));
