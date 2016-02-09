@@ -40,7 +40,7 @@ module.exports = function (app) {
     app.get('/users', users.findAll); // Need to remove once in production
     app.get('/users/:id', users.findById);
     app.post('/users', users.add);
-    app.put('/users', authenticate.verify, users.update); // Lock down
+    app.put('/users', authenticate.verify, users.update);
     app.delete('/users/:id', users.delete); // Lock down
 
     // Error Handling

@@ -33,7 +33,15 @@ exports.add = function(req, res, next) {
     newUser.password = hash;
     newUser.save(function(err, newUser) {
         if (err) return next(err);
-        res.status(201).json({"message": "User Registered!"});
+        res.status(201).json({"message": "User Registered!",
+            "data": {
+                "_id": newUser.id,
+                "last_name": newUser.last_name,
+                "first_name": newUser.first_name,
+                "email": newUser.email,
+                "created": newUser.created
+            }
+        });
     });
 };
 
