@@ -31,7 +31,7 @@ module.exports = function (app) {
     var subtasks = require('./controllers/subtasks');
     app.get('/projects/:pid/tasks/:tid/subtasks', authenticate.verify, subtasks.findAll);
     app.get('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.findById);
-    app.post('/projects/:pid/tasks/:tid/subtasks/', authenticate.verify, subtasks.add);
+    app.post('/projects/:pid/tasks/:tid/subtasks', authenticate.verify, subtasks.add);
     app.put('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.update);
     app.delete('/projects/:pid/tasks/:tid/subtasks/:sid', authenticate.verify, subtasks.delete);
 
@@ -48,7 +48,7 @@ module.exports = function (app) {
     app.use(errors.errorHandler);
     app.use(errors.nullRoute); // Requested route doesn't exist
 
-    // To add authentication to a route, add a authenticate.verify to the
+    // To add authentication to a route, add an authenticate.verify to the
     // parameters of the HTTP request. For example, if you want to lock down
     // HTTP GET requests on /users, you would implement the following code:
     //     app.get('/users', authenticate.verify, users.findAll);
