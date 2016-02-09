@@ -81,13 +81,19 @@ exports.add = function(req, res, next) {
 
 // Update a specific task
 exports.update = function(req, res, next) {
-    Task.findById(req.params.id, function(err, task) {
+    Task.findById(req.params.tid, function(err, task) {
         if (err) return next(err);
-        // Return 404 for a nonexistent task
-        if (task == null) return next(errors.newError(404));
 
-        // Make sure the user has permission to edit the task
-        Project.findById(task.project, '-__v', function(err, project) {
+        // Return 404 for a nonexistent task or if the project and task's
+        // project that the user sent us doesn't match up
+        if ((task == null) || (req.params.pid != task.project)) {
+            console.log('test');
+            return next(errors.newError(404));
+        }
+
+        // Make sure the user has permission to edit the project associated
+        // with the task
+        Project.findById(req.params.pid, '-__v', function(err, project) {
             if (err) return next(err);
             // Return 404 for a nonexistent project
             if (project == null) return next(errors.newError(404));
@@ -99,22 +105,27 @@ exports.update = function(req, res, next) {
                 if (req.body.name !== undefined) {
                     task.name = req.body.name;
                 }
+
                 if (req.body.description !== undefined) {
                     task.description = req.body.description;
                 }
+
                 if (req.body.due !== undefined) {
                     task.due = req.body.due;
                 }
+
                 if (req.body.owner !== undefined) {
                     task.owner = req.body.owner;
                 }
+
                 if (req.body.project !== undefined) {
                     task.project = req.body.project;
                 }
+
                 if (req.body.status !== undefined) {
                     var status = req.body.status.toLowerCase();
-                    if (status === 'backlog' ||
-                        status === 'in-progress' ||
+
+                    if (status === 'backlog' || status === 'in-progress' ||
                         status === 'complete') {
                             task.status = status;
                     }
