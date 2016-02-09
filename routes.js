@@ -15,8 +15,8 @@ module.exports = function (app) {
     app.get('/projects', authenticate.verify, projects.findAll);
     app.get('/projects/:id', authenticate.verify, projects.findById);
     app.post('/projects', authenticate.verify, projects.add);
-    app.put('/projects/:id', authenticate.verify, projects.update); // Need to lock down
-    app.delete('/projects/:id', projects.delete); // Need to lock down
+    app.put('/projects/:id', authenticate.verify, projects.update);
+    app.delete('/projects/:id', authenticate.verify, projects.delete);
 
     // Tasks
     var tasks = require('./controllers/tasks');

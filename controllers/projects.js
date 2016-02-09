@@ -73,6 +73,12 @@ exports.delete = function(req, res, next) {
         if (err) return next(err);
         // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));
+
+        // Make sure the user is the owner
+        if (project.owner != req.decoded.id) {
+            return next(errors.newError(403));
+        }
+
         project.remove(function(err, project) {
             if (err) return next(err);
             res.json({"message": "Project Deleted!"});
