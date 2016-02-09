@@ -40,13 +40,28 @@ exports.update = function(req, res, next) {
         if (err) return next(err);
         // Return 404 for a nonexistant project
         if (project == null) return next(errors.newError(404));
-        project.name = req.body.name;
-        project.description = req.body.description;
-        project.owner = req.body.owner;
-        project.save(function(err, project) {
-            if (err) return next(err);
-            res.json({"message": "Project Updated!"});
-        });
+
+        // Check for permissions
+        if (project.members.indexOf(req.decoded.id) !== -1) {
+            // Begin a series of checks for items that need to be updated
+            // This prevents null values for being sent in for updating
+            if (req.body.name !== undefined) {
+                project.name = req.body.name;
+            }
+
+            if (req.body.description !== undefined) {
+                project.description = req.body.description;
+            }
+
+            if (req.body.owner !== undefined) {
+                project.owner = req.body.owner;
+            }
+
+            project.save(function(err, project) {
+                if (err) return next(err);
+                res.json({"message": "Project Updated!"});
+            });
+        }
     });
 };
 
