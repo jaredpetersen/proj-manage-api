@@ -150,13 +150,13 @@ exports.update = function(req, res, next) {
 exports.delete = function(req, res, next) {
     // Can't use findByIdAndRemove() or Model.remove() in order to invoke
     // the middleware; Have to remove a specific document
-    Task.findById(req.params.id, function(err, task) {
+    Task.findById(req.params.tid, function(err, task) {
         if (err) return next(err);
         // Return 404 for a nonexistant task
         if (task == null) return next(errors.newError(404));
 
         // Make sure the user has permission to delete the task
-        Project.findById(task.project, '-__v', function(err, project) {
+        Project.findById(req.params.pid, '-__v', function(err, project) {
             if (err) return next(err);
             // Return 404 for a nonexistent project
             if (project == null) return next(errors.newError(404));

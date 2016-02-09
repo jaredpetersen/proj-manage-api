@@ -25,7 +25,7 @@ module.exports = function (app) {
     app.get('/projects/:pid/tasks/:tid', authenticate.verify, tasks.findById);
     app.post('/projects/:pid/tasks', authenticate.verify, tasks.add);
     app.put('/projects/:pid/tasks/:tid', authenticate.verify, tasks.update);
-    app.delete('/tasks/:id', authenticate.verify, tasks.delete);
+    app.delete('/projects/:pid/tasks/:tid', authenticate.verify, tasks.delete);
 
     // Subasks
     var subtasks = require('./controllers/subtasks');
