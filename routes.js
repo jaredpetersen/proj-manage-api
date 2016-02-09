@@ -41,7 +41,7 @@ module.exports = function (app) {
     app.get('/users/:id', users.findById);
     app.post('/users', users.add);
     app.put('/users', authenticate.verify, users.update);
-    app.delete('/users/', authenticate.verify, users.delete);
+    app.delete('/users', authenticate.verify, users.delete);
 
     // Error Handling
     var errors = require('./controllers/errors');
