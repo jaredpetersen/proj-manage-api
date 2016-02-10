@@ -1,7 +1,9 @@
 'use strict';
 
 var Project = require('../models/project.js');
+var Task = require('../models/task.js');
 var errors = require('./errors.js');
+var async = require("async");
 
 // Get all projects
 exports.findAll = function(req, res, next) {
@@ -62,6 +64,11 @@ exports.update = function(req, res, next) {
                 res.json({"message": "Project Updated!"});
             });
         }
+        else {
+            // User is not a member of the project and does not have a right
+            // to the data, tell them so.
+            return next(errors.newError(403));
+        }
     });
 };
 
@@ -83,5 +90,63 @@ exports.delete = function(req, res, next) {
             if (err) return next(err);
             res.json({"message": "Project Deleted!"});
         });
+    });
+};
+
+exports.chart = function(req, res, next) {
+    Project.findById(req.params.id, function(err, project) {
+        if (err) return next(err);
+        // Return 404 for a nonexistant project
+        if (project == null) return next(errors.newError(404));
+
+        // Check for permissions
+        if (project.members.indexOf(req.decoded.id) !== -1) {
+            async.parallel([
+                // Get the number of backlog tasks
+                function(callback) {
+                    Task.count({project: project.id, status: 'backlog'}, function(err, backlog) {
+                        if (err) callback(err);
+
+                        callback(null, backlog);
+                    });
+                },
+
+                // Get the number of in-progress tasks
+                function(callback) {
+                    Task.count({project: project.id, status: 'in-progress'}, function(err, inprogress) {
+                        if (err) callback(err);
+
+                        callback(null, inprogress);
+                    });
+                },
+
+                // Get the number of complete tasks
+                function(callback) {
+                    Task.count({project: project.id, status: 'complete'}, function(err, complete) {
+                        if (err) callback(err);
+
+                        callback(null, complete);
+                    });
+                }
+            ],
+
+            function(err, results) {
+                if (err) return next(err);
+
+                var chart_data = {
+                    'big_number': {
+                        'backlog': results[0],
+                        'in-progress': results[1],
+                        'complete': results[2]
+                    }
+                };
+                res.json(chart_data);
+            });
+        }
+        else {
+            // User is not a member of the project and does not have a right
+            // to the data, tell them so.
+            return next(errors.newError(403));
+        }
     });
 };

@@ -17,6 +17,7 @@ module.exports = function (app) {
     app.post('/projects', authenticate.verify, projects.add);
     app.put('/projects/:id', authenticate.verify, projects.update);
     app.delete('/projects/:id', authenticate.verify, projects.delete);
+    app.get('/projects/:id/charts', authenticate.verify, projects.chart);
 
     // Tasks
     var tasks = require('./controllers/tasks');
