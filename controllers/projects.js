@@ -4,6 +4,8 @@ var Project = require('../models/project.js');
 var Task = require('../models/task.js');
 var errors = require('./errors.js');
 var async = require("async");
+var mongoose = require('mongoose');
+var ObjectID = mongoose.Types.ObjectId;
 
 // Get all projects
 exports.findAll = function(req, res, next) {
@@ -93,6 +95,7 @@ exports.delete = function(req, res, next) {
     });
 };
 
+// Still a work in progress
 exports.chart = function(req, res, next) {
     Project.findById(req.params.id, function(err, project) {
         if (err) return next(err);
@@ -106,7 +109,6 @@ exports.chart = function(req, res, next) {
                 function(callback) {
                     Task.count({project: project.id, status: 'backlog'}, function(err, backlog) {
                         if (err) callback(err);
-
                         callback(null, backlog);
                     });
                 },
@@ -115,7 +117,6 @@ exports.chart = function(req, res, next) {
                 function(callback) {
                     Task.count({project: project.id, status: 'in-progress'}, function(err, inprogress) {
                         if (err) callback(err);
-
                         callback(null, inprogress);
                     });
                 },
@@ -124,8 +125,21 @@ exports.chart = function(req, res, next) {
                 function(callback) {
                     Task.count({project: project.id, status: 'complete'}, function(err, complete) {
                         if (err) callback(err);
-
                         callback(null, complete);
+                    });
+                },
+
+                // Get the backlog task counts separated out by date
+                function(callback) {
+                    Task.aggregate(
+                        [
+                            { $match : { project : ObjectID(project.id) } },
+                            { $group : { _id : { $dateToString: { format: "%m/%d", date: "$created" } }, count: { $sum: 1 } } },
+                            { $sort : { _id : 1 } }
+                        ],
+                    function(err, completedates) {
+                        if (err) callback(err);
+                        callback(null, completedates);
                     });
                 }
             ],
@@ -138,6 +152,12 @@ exports.chart = function(req, res, next) {
                         'backlog': results[0],
                         'in-progress': results[1],
                         'complete': results[2]
+                    },
+                    'line_tasks': {
+                        'dates': ['12/01', '12/02', '12/03', '12/04', '12/05', '12/06', '12/07'],
+                        'backlog': results[3],
+                        'in-progress': [10, 1, 4, 3, 5, 0, 1],
+                        'complete': [0, 5, 6, 9, 11, 13, 15]
                     }
                 };
                 res.json(chart_data);
