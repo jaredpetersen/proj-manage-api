@@ -27,6 +27,9 @@ describe('Tasks', function(){
                 expect(res.body[0].name).to.be.a('String');
                 // Description
                 expect(res.body[0]).to.have.property('description');
+                if (res.body[0].description !== null) {
+                    expect(res.body[0].description).to.be.a('String');
+                }
                 // Due
                 expect(res.body[0]).to.have.property('due');
                 if (res.body[0].due !== null) {
@@ -36,12 +39,25 @@ describe('Tasks', function(){
                 expect(res.body[0]).to.have.property('created');
                 expect(res.body[0].created).to.not.equal(null);
                 expect(res.body[0].created).to.be.a('String');
+                // Owner
+                expect(res.body[0]).to.have.property('owner');
+                if (res.body[0].owner !== null) {
+                    expect(res.body[0].owner).to.be.a('String');
+                }
+                // Status
+                expect(res.body[0]).to.have.property('status');
+                expect(res.body[0].status).to.not.equal(null);
+                expect(res.body[0].status).to.be.a('Array');
+                expect(res.body[0].status[0]).to.have.property('date');
+                expect(res.body[0].status[0].date).to.not.equal(null);
+                expect(res.body[0].status[0].date).to.be.a('String');
+                expect(res.body[0].status[0]).to.have.property('status');
+                expect(res.body[0].status[0].status).to.be.a('String');
+                expect(res.body[0].status[0].status).to.equal('backlog');
                 // Project
                 expect(res.body[0]).to.have.property('project');
                 expect(res.body[0].project).to.not.equal(null);
                 expect(res.body[0].project).to.be.a('String');
-                // Owner
-                expect(res.body[0]).to.have.property('owner');
             }
             done();
         });
@@ -49,7 +65,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56865ac6820d5aed0b52e7aa')
+        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56c6b0a650bc2dc9b19c27aa')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
@@ -66,12 +82,33 @@ describe('Tasks', function(){
             expect(res.body.name).to.be.a('String');
             // Description
             expect(res.body).to.have.property('description');
+            if (res.body.description !== null) {
+                expect(res.body.description).to.be.a('String');
+            }
+            // Due
+            expect(res.body).to.have.property('due');
+            if (res.body.due !== null) {
+                expect(res.body.due).to.be.a('String');
+            }
             // Created
             expect(res.body).to.have.property('created');
             expect(res.body.created).to.not.equal(null);
             expect(res.body.created).to.be.a('String');
             // Owner
             expect(res.body).to.have.property('owner');
+            if (res.body.owner !== null) {
+                expect(res.body.owner).to.be.a('String');
+            }
+            // Status
+            expect(res.body).to.have.property('status');
+            expect(res.body.status).to.not.equal(null);
+            expect(res.body.status).to.be.a('Array');
+            expect(res.body.status[0]).to.have.property('date');
+            expect(res.body.status[0].date).to.not.equal(null);
+            expect(res.body.status[0].date).to.be.a('String');
+            expect(res.body.status[0]).to.have.property('status');
+            expect(res.body.status[0].status).to.be.a('String');
+            expect(res.body.status[0].status).to.equal('backlog');
             // Project
             expect(res.body).to.have.property('project');
             expect(res.body.project).to.not.equal(null);

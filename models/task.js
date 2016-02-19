@@ -11,7 +11,15 @@ var taskSchema = new mongoose.Schema({
     created: {type: Date, default: Date.now},
     due: {type: Date},
     owner: {type : Schema.Types.ObjectId, ref: 'User'},
-    status: {type: String, lowercase: true, default: 'backlog'},
+    status: [
+              {
+                // Have to include this as a non-selectable field so that it
+                // won't show up in the output
+                _id: {type: Schema.Types.ObjectId, select: false},
+                status: {type: String, lowercase: true},
+                date: {type: Date}
+              }
+            ],
     project: {type : Schema.Types.ObjectId, ref: 'Project', required: true}
 });
 

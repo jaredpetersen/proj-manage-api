@@ -1,7 +1,7 @@
 module.exports = {
     'dbHost': 'mongodb://104.237.141.202:27017/projmanage',
-    'apiPort': 8105,
+    'apiPort': 8112,
     'tokenSecret': 'supersecret',
     'tokenExpiration': 1440,
-    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ1NDk3MDY1OSwiZXhwIjoxNDU1MDU3MDU5fQ.tPh4_4w8ycgHQf8f_GgwjoxyG3FWMMNWayhRP8lIZF0'
+    'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImpwZXRlcnNlbjExQHdvdS5lZHUiLCJpZCI6IjU1ZWJhYjIxMmY4ODUxNTQwZWEwMzk3ZiIsImlhdCI6MTQ1NTg0MTYwOSwiZXhwIjoxNDU1OTI4MDA5fQ.SAzYxovpte70psf7nMn5JWO6moy7-9VFdH79J4l9EVo'
 };

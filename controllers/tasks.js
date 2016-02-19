@@ -66,6 +66,9 @@ exports.add = function(req, res, next) {
             newTask.description = req.body.description || null;
             newTask.due = req.body.due || null;
             newTask.owner = req.body.owner || null;
+            // Defaults for arrays don't really work, so we have to resort
+            // to adding what we need here
+            newTask.status.push({'status': 'backlog', 'date': Date.now()});
             newTask.project = req.params.pid;
             newTask.save(function(err, newTask) {
                 if (err) return next(err);
@@ -121,13 +124,16 @@ exports.update = function(req, res, next) {
                 if (req.body.status !== undefined) {
                     var status = req.body.status.toLowerCase();
 
-                    if (status === 'backlog' || status === 'in-progress' ||
-                        status === 'complete') {
-                            task.status = status;
-                    }
-                    else {
+                    if (status !== 'backlog' && status !== 'in-progress' && status !== 'complete') {
                         // The user inputted a non-acceptable status
                         return next(errors.newError(400));
+                    }
+                    else if (task.status.length == 0 || status !== task.status[task.status.length - 1].status) {
+                        // The status is not the same as last time, go ahead and add it
+                        task.status.push({
+                            'status': status,
+                            'date': Date.now()
+                        });
                     }
                 }
 
