@@ -134,7 +134,27 @@ exports.chart = function(req, res, next) {
                     Task.aggregate(
                         [
                             { $match : { project : ObjectID(project.id) } },
-                            { $group : { _id : { $dateToString: { format: "%m/%d", date: "$created" } }, count: { $sum: 1 } } },
+                            { $group : {
+                                _id: {
+                                    month: { $month: "$created" },
+                                    day: { $dayOfMonth: "$created" },
+                                    year: { $year: "$created" },
+                                },
+                                total: { $sum: 1 },
+                                dt_sample: { $first: "$created" },
+                              }
+                            },
+                            { $project : {
+                                _id: 0,
+                                date: {
+                                  $dateToString: {
+                                    format: '%Y-%m-%dT00:00:00.000Z',
+                                    date: '$dt_sample'
+                                  }
+                                },
+                                total: '$total'
+                              }
+                          },
                             { $sort : { _id : 1 } }
                         ],
                     function(err, completedates) {
@@ -146,6 +166,8 @@ exports.chart = function(req, res, next) {
 
             function(err, results) {
                 if (err) return next(err);
+
+                console.log(results[3]);
 
                 var chart_data = {
                     'big_number': {
