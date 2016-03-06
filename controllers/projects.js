@@ -105,48 +105,31 @@ exports.chart = function(req, res, next) {
         // Check for permissions
         if (project.members.indexOf(req.decoded.id) !== -1) {
             async.parallel([
-                // Get the number of backlog tasks
-                function(callback) {
-                    Task.count({project: project.id, status: 'backlog'}, function(err, backlog) {
-                        if (err) callback(err);
-                        callback(null, backlog);
-                    });
-                },
-
-                // Get the number of in-progress tasks
-                function(callback) {
-                    Task.count({project: project.id, status: 'in-progress'}, function(err, inprogress) {
-                        if (err) callback(err);
-                        callback(null, inprogress);
-                    });
-                },
-
-                // Get the number of complete tasks
-                function(callback) {
-                    Task.count({project: project.id, status: 'complete'}, function(err, complete) {
-                        if (err) callback(err);
-                        callback(null, complete);
-                    });
-                },
-
                 // Get the backlog task counts separated out by date
                 function(callback) {
                     Task.aggregate(
                         [
-                            { $match : { project : ObjectID(project.id) } },
+                            { $match : { project: ObjectID(project.id) } },
+                            { $unwind : '$status' },
+                            { $project : {
+                                _id: 1,
+                                status: '$status.status',
+                                status_date: '$status.date'
+                              }
+                            },
+                            { $match : { status: 'backlog' } },
                             { $group : {
                                 _id: {
-                                    month: { $month: "$created" },
-                                    day: { $dayOfMonth: "$created" },
-                                    year: { $year: "$created" },
+                                    month: { $month: '$status_date' },
+                                    day: { $dayOfMonth: '$status_date' },
+                                    year: { $year: '$status_date' }
                                 },
-                                total: { $sum: 1 },
-                                dt_sample: { $first: "$created" },
+                                total: {$sum: 1},
+                                dt_sample: { $first: "$status_date" }
                               }
                             },
                             { $project : {
-                                _id: 0,
-                                date: {
+                                _id: {
                                   $dateToString: {
                                     format: '%Y-%m-%dT00:00:00.000Z',
                                     date: '$dt_sample'
@@ -154,32 +137,108 @@ exports.chart = function(req, res, next) {
                                 },
                                 total: '$total'
                               }
-                          },
-                            { $sort : { _id : 1 } }
+                           },
+                           { $sort : { _id : 1 } }
                         ],
-                    function(err, completedates) {
+                    function(err, backlog) {
                         if (err) callback(err);
-                        callback(null, completedates);
+                        callback(null, backlog);
+                    });
+                },
+
+                // Get the inprogress task counts separated out by date
+                function(callback) {
+                    Task.aggregate(
+                        [
+                            { $match : { project: ObjectID(project.id) } },
+                            { $unwind : '$status' },
+                            { $project : {
+                                _id: 1,
+                                status: '$status.status',
+                                status_date: '$status.date'
+                              }
+                            },
+                            { $match : { status: 'in-progress' } },
+                            { $group : {
+                                _id: {
+                                    month: { $month: '$status_date' },
+                                    day: { $dayOfMonth: '$status_date' },
+                                    year: { $year: '$status_date' }
+                                },
+                                total: {$sum: 1},
+                                dt_sample: { $first: "$status_date" }
+                              }
+                            },
+                            { $project : {
+                                _id: {
+                                  $dateToString: {
+                                    format: '%Y-%m-%dT00:00:00.000Z',
+                                    date: '$dt_sample'
+                                  }
+                                },
+                                total: '$total'
+                              }
+                           },
+                           { $sort : { _id : 1 } }
+                        ],
+                    function(err, inprogress) {
+                        if (err) callback(err);
+                        callback(null, inprogress);
+                    });
+                },
+
+                // Get the complete task counts separated out by date
+                function(callback) {
+                    Task.aggregate(
+                        [
+                            { $match : { project: ObjectID(project.id) } },
+                            { $unwind : '$status' },
+                            { $project : {
+                                _id: 1,
+                                status: '$status.status',
+                                status_date: '$status.date'
+                              }
+                            },
+                            { $match : { status: 'complete' } },
+                            { $group : {
+                                _id: {
+                                    month: { $month: '$status_date' },
+                                    day: { $dayOfMonth: '$status_date' },
+                                    year: { $year: '$status_date' }
+                                },
+                                total: {$sum: 1},
+                                dt_sample: { $first: "$status_date" }
+                              }
+                            },
+                            { $project : {
+                                _id: {
+                                  $dateToString: {
+                                    format: '%Y-%m-%dT00:00:00.000Z',
+                                    date: '$dt_sample'
+                                  }
+                                },
+                                total: '$total'
+                              }
+                           },
+                           { $sort : { _id : 1 } }
+                        ],
+                    function(err, complete) {
+                        if (err) callback(err);
+                        callback(null, complete);
                     });
                 }
+
+
             ],
 
             function(err, results) {
                 if (err) return next(err);
 
-                console.log(results[3]);
-
                 var chart_data = {
-                    'big_number': {
+                    'historical_status': {
                         'backlog': results[0],
                         'in-progress': results[1],
                         'complete': results[2]
-                    },
-                    'line_tasks': {
-                        'dates': ['12/01', '12/02', '12/03', '12/04', '12/05', '12/06', '12/07'],
-                        'backlog': results[3],
-                        'in-progress': [10, 1, 4, 3, 5, 0, 1],
-                        'complete': [0, 5, 6, 9, 11, 13, 15]
                     }
                 };
                 res.json(chart_data);
