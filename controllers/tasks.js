@@ -66,9 +66,14 @@ exports.add = function(req, res, next) {
             newTask.description = req.body.description || null;
             newTask.due = req.body.due || null;
             newTask.owner = req.body.owner || null;
+            // Set up date for created and status
+            var created = new Date();
             // Defaults for arrays don't really work, so we have to resort
             // to adding what we need here
-            newTask.status.push({'status': 'backlog', 'date': Date.now()});
+            newTask.status.push({'status': 'backlog', 'date': created});
+            // Not technically required to manually include created, but
+            // doing it so that the created and status dates match up
+            newTask.created = created;
             newTask.project = req.params.pid;
             newTask.save(function(err, newTask) {
                 if (err) return next(err);
