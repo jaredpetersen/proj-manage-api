@@ -130,6 +130,21 @@ exports.update = function(req, res, next) {
                     }
                     else if (task.status.length == 0 || status !== task.status[task.status.length - 1].status) {
                         // The status is not the same as last time, go ahead and add it
+
+                        // Set up dates for comparison
+                        var prevDate = new Date(task.status[task.status.length - 1].date);
+                        prevDate.setHours(0, 0, 0, 0);
+                        var newDate = new Date();
+                        newDate.setHours(0, 0, 0, 0);
+
+                        // If the user already changed the status today, just make the new change
+                        // the one that is recorded
+                        if (prevDate.valueOf() === newDate.valueOf())
+                        {
+                            // Remove the last item so that it can be replaced
+                            task.status.pop();
+                        }
+                        // Add the new status
                         task.status.push({
                             'status': status,
                             'date': Date.now()
