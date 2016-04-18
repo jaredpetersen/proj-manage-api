@@ -153,14 +153,11 @@ exports.update = function(req, res, next) {
                             taskOffset = 1;
                         }
 
-                        // Add the new status if the previous status was not the same thing
-                        if (status !== task.status[task.status.length - taskOffset].status) {
-                            // Add the new status
-                            task.status.push({
-                                'status': status,
-                                'date': Date.now()
-                            });
-                        }
+                        // Add the new status
+                        task.status.push({
+                            'status': status,
+                            'date': Date.now()
+                        });
                     }
                 }
 
