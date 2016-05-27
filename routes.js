@@ -39,10 +39,10 @@ module.exports = function (app) {
     // Users
     var users = require('./controllers/users');
     app.get('/users', users.findAll); // Need to remove once in production
-    app.get('/users/:id', users.findById);
-    app.post('/users', users.add);
-    app.put('/users', authenticate.verify, users.update);
-    app.delete('/users', authenticate.verify, users.delete);
+    app.get('/users/:id', users.findById); // Need to add authentication to
+    app.post('/users', users.add); // Need to add authentication
+    app.put('/users', authenticate.verify, users.update); // Need to add authentication
+    app.delete('/users', authenticate.verify, users.delete); // Need to add authentication
 
     // Error Handling
     var errors = require('./controllers/errors');

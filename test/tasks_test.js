@@ -65,7 +65,7 @@ describe('Tasks', function(){
 
     // Will only pass if there are tasks
     it('Gets a single task', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56c6b0a650bc2dc9b19c27aa')
+        api.get('/projects/56c8c0d3b910597464140927/tasks/5747f7d4092624006a40a9f5')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
@@ -108,7 +108,7 @@ describe('Tasks', function(){
             expect(res.body.status[0].date).to.be.a('String');
             expect(res.body.status[0]).to.have.property('status');
             expect(res.body.status[0].status).to.be.a('String');
-            expect(res.body.status[0].status).to.equal('backlog');
+            expect(res.body.status[0].status).to.equal('in-progress');
             // Project
             expect(res.body).to.have.property('project');
             expect(res.body.project).to.not.equal(null);

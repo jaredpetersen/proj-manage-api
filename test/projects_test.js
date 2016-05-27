@@ -46,7 +46,7 @@ describe('Projects', function(){
 
     // Will only pass if there are users
     it('Gets a single project', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3')
+        api.get('/projects/5747e52a092624006a40a9de')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)

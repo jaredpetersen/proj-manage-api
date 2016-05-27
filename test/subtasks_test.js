@@ -6,7 +6,7 @@ var api = supertest('http://localhost:' + config.apiPort);
 
 describe('Subtasks', function(){
     it('Lists all subtasks', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56865b48820d5aed0b52e7ac/subtasks')
+        api.get('/projects/5747e52a092624006a40a9de/tasks/5747efd1092624006a40a9e3/subtasks')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
@@ -43,7 +43,7 @@ describe('Subtasks', function(){
 
     // Will only pass if there are subtasks
     it('Gets a single subtask', function(done){
-        api.get('/projects/56666ee1d83211fe0aa0fac3/tasks/56865b48820d5aed0b52e7ac/subtasks/5694259f6a8356f3347e5dd2')
+        api.get('/projects/5747e52a092624006a40a9de/tasks/5747efd1092624006a40a9e3/subtasks/5747f3b0092624006a40a9ed')
         .set('Accept', 'application/json')
         .set('x-access-token', config.token)
         .expect(200)
