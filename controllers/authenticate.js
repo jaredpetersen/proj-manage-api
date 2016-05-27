@@ -21,8 +21,7 @@ exports.login = function(req, res, next) {
             // Create the JSON token
             // Look into adding a JTI in the future for additional security
             var token = jwt.sign(
-                {"email": req.body.email,
-                 "id": user._id},
+                {"email": req.body.email, "id": user._id},
                 config.tokenSecret,
                 {
                     // Expire in 24 hours

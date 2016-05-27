@@ -227,8 +227,6 @@ exports.chart = function(req, res, next) {
                         callback(null, complete);
                     });
                 }
-
-
             ],
 
             function(err, results) {
